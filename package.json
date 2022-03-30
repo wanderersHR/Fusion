@@ -1,22 +1,22 @@
 {
-  "name": "fusion",
-  "private": true,
-  "version": "0.0.0",
-  "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build && npm run cloud",
-    "preview": "vite preview",
-    "cloud": "cd ./functions && npm run build && cd .."
-  },
-  "dependencies": {
-    "firebase": "^9.6.10",
-    "sass": "^1.49.9",
-    "vue": "^3.2.25"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-vue": "^2.2.0",
-    "typescript": "^4.5.4",
-    "vite": "^2.8.0",
-    "vue-tsc": "^0.29.8"
-  }
+	"name": "fusion",
+	"private": true,
+	"version": "0.0.0",
+	"scripts": {
+		"dev": "npm i && vite",
+		"build": "npm i && vue-tsc --noEmit && vite build && npm run cloud",
+		"preview": "npm i && vite preview",
+		"cloud": "cd ./functions && npm i && npm run build && cd .."
+	},
+	"dependencies": {
+		"firebase": "^9.6.10",
+		"sass": "^1.49.9",
+		"vue": "^3.2.25"
+	},
+	"devDependencies": {
+		"@vitejs/plugin-vue": "^2.2.0",
+		"typescript": "^4.5.4",
+		"vite": "^2.8.0",
+		"vue-tsc": "^0.29.8"
+	}
 }
