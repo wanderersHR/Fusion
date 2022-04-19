@@ -1,16 +1,18 @@
+<!-- @format -->
+
 <template>
-    <h1>{{ message }}</h1>
+	<h1>{{ message }}</h1>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue";
 
 export default defineComponent({
-    props: {
-        message: {
-            type: String,
-            required: true
-        }
-    }
-})
+	props: {
+		message: {
+			type: String,
+			required: true,
+		},
+	},
+});
 </script>
