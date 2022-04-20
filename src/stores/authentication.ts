@@ -1,9 +1,11 @@
 /** @format */
 
 import { defineStore } from "pinia";
+import { json } from "stream/consumers";
 
 interface AccessTokenResponse {
 	access_token: string;
+	refresh_token: string;
 	expires_in: number;
 	scope: string;
 	token_type: string;
@@ -50,9 +52,31 @@ export const useAuthenticationStore = defineStore("authentication", {
 				this.accessToken = JSON.parse(token);
 			}
 		},
+		refresh() {
+			const refreshData = {
+				grant_type: "refresh_token",
+				client_id: "o5OphqyH8bmxCcQqnaJvlZFslyyclMm7",
+				client_secret: "SYTQwcrq4w8P5dLl4ZxXybwGT2CmfN_SDv9DJK4FxJfsIxb7sw26PgBe1WrzHPim",
+				refresh_token: this.getRefreshToken,
+			};
+
+			fetch(`https://auth.atlassian.com/oauth/token`, {
+				method: "POST",
+				headers: {
+					"Content-type": "appplication/json",
+				},
+				body: JSON.stringify(refreshData),
+			})
+				.then((response) => response.json())
+				.then((data) => {
+					this.accessToken = data as AccessTokenResponse;
+					localStorage.setItem("accessToken", JSON.stringify(data));
+				});
+		},
 	},
 	getters: {
 		isAuthenticated: (state) => state.accessToken != undefined,
 		getBearerToken: (state) => state.accessToken?.access_token,
+		getRefreshToken: (state) => state.accessToken?.refresh_token,
 	},
 });

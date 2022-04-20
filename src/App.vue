@@ -41,6 +41,12 @@ export default defineComponent({
 		onBeforeMount(() => {
 			const authenticationStore = useAuthenticationStore();
 			authenticationStore.fetchAccessToken();
+			if (authenticationStore.isAuthenticated) {
+				setInterval(() => {
+					authenticationStore.refresh();
+					console.log("hoi");
+				}, 10 * 1000);
+			}
 		});
 	},
 });
