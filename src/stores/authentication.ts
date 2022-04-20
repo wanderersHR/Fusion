@@ -1,0 +1,46 @@
+/** @format */
+
+import { defineStore } from "pinia";
+
+interface AccessTokenResponse {
+	access_token: string;
+	expires_in: number;
+	scope: string;
+	token_type: string;
+}
+
+export const useAuthenticationStore = defineStore("authentication", {
+	state: () => {
+		return { token: undefined as string | undefined, accessToken: undefined as AccessTokenResponse | undefined };
+	},
+	actions: {
+		login(token: string) {
+			this.token = token;
+
+			const data = {
+				grant_type: "authorization_code",
+				client_id: "o5OphqyH8bmxCcQqnaJvlZFslyyclMm7",
+				client_secret: "SYTQwcrq4w8P5dLl4ZxXybwGT2CmfN_SDv9DJK4FxJfsIxb7sw26PgBe1WrzHPim",
+				code: this.token,
+				redirect_uri: "http://localhost:3000/callback",
+			};
+
+			fetch("https://auth.atlassian.com/oauth/token", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(data),
+			})
+				.then((res) => res.json())
+				.then((data) => (this.accessToken = data as AccessTokenResponse));
+		},
+		logout() {
+			this.token = undefined;
+		},
+	},
+	getters: {
+		isAuthenticated: (state) => state.accessToken != undefined,
+		getBearerToken: (state) => state.accessToken?.access_token,
+	},
+});
