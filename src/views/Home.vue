@@ -38,6 +38,20 @@ export default defineComponent({
 		}
 
 		return { fetchData };
+		
 	},
+	mounted() {
+		fetch("https://blishr.simplicate.nl/api/v2/crm/organization", {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				"Authentication-Key": "wEp4wAwqFXyAcPmasCsP4WBH21o0gXSZ",
+				"Authentication-Secret": "dBQHfEHMLDlUUESGlvAhq63BOR9hPIrl"
+			},
+		})
+			.then(res => res.json())
+			.then((data) => console.log(data));
+	}
 });
+
 </script>
