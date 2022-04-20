@@ -41,7 +41,7 @@ export default defineComponent({
 		
 	},
 	mounted() {
-		fetch("https://blishr.simplicate.nl/api/v2/crm/organization", {
+		fetch("https://blishr.simplicate.nl/api/v2/projects/project", {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
