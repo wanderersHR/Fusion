@@ -33,10 +33,22 @@ export const useAuthenticationStore = defineStore("authentication", {
 				body: JSON.stringify(data),
 			})
 				.then((res) => res.json())
-				.then((data) => (this.accessToken = data as AccessTokenResponse));
+				.then((data) => {
+					this.accessToken = data as AccessTokenResponse;
+					localStorage.setItem("accessToken", JSON.stringify(data));
+				});
 		},
 		logout() {
 			this.token = undefined;
+			this.accessToken = undefined;
+			localStorage.removeItem("accessToken");
+		},
+		fetchAccessToken() {
+			const token = localStorage.getItem("accessToken");
+
+			if (token != null) {
+				this.accessToken = JSON.parse(token);
+			}
 		},
 	},
 	getters: {

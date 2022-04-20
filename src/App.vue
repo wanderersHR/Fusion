@@ -10,10 +10,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, onBeforeMount } from "vue";
 import { useFirebaseStore } from "./stores/firebase";
 import { httpsCallable } from "firebase/functions";
 import { ref } from "vue";
+import { useAuthenticationStore } from "./stores/authentication";
 
 export default defineComponent({
 	setup() {
@@ -36,6 +37,11 @@ export default defineComponent({
 		// 	duration.value = endTime.value - startTime.value;
 		// });
 		// return { startTime, duration, endTime, firebaseMsg };
+
+		onBeforeMount(() => {
+			const authenticationStore = useAuthenticationStore();
+			authenticationStore.fetchAccessToken();
+		});
 	},
 });
 </script>

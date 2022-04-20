@@ -23,9 +23,7 @@ export default defineComponent({
 		const authenticationStore = useAuthenticationStore();
 
 		function fetchData() {
-			console.log(authenticationStore.isAuthenticated);
 			if (authenticationStore.isAuthenticated) {
-				console.log(authenticationStore.getBearerToken);
 				fetch("https://api.atlassian.com/me", {
 					headers: {
 						Authorization: "Bearer " + authenticationStore.getBearerToken,
