@@ -52,7 +52,7 @@ export const useAuthenticationStore = defineStore("authentication", {
 		},
 	},
 	getters: {
-		isAuthenticated: (state) => state.accessToken != undefined,
+		isAuthenticated: (state) => state.accessToken?.access_token != undefined,
 		getBearerToken: (state) => state.accessToken?.access_token,
 	},
 });
