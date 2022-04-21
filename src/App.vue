@@ -1,12 +1,16 @@
 <!-- @format -->
 
 <template>
+	<div id="app" class="bg-gray-200 w-full h-screen p-64">
+		<div id="nav">
+		</div>
 	<!-- <p>Start: {{ startTime }}</p>
 	<p>End: {{ endTime }}</p>
 	<p>Duration: {{ duration }}</p>
 	<p>Response: {{ firebaseMsg }}</p> -->
 
-	<router-view />
+		<router-view />
+	</div>
 </template>
 
 <script lang="ts">
