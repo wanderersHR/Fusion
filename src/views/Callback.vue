@@ -16,6 +16,11 @@ export default defineComponent({
 		const router = useRouter();
 		const authenticationStore = useAuthenticationStore();
 
+		if (!route.query.code) {
+			router.push({ name: "login" });
+			return;
+		}
+
 		onMounted(() => {
 			authenticationStore.login(route.query.code as string);
 			setTimeout(() => router.push({ name: "home" }), 1000);

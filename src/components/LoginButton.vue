@@ -1,8 +1,21 @@
 <!-- @format -->
 
 <template>
-	<a
-		href="https://auth.atlassian.com/authorize?audience=api.atlassian.com&client_id=o5OphqyH8bmxCcQqnaJvlZFslyyclMm7&scope=read:me offline_access&redirect_uri=http://localhost:3000/callback&state=123&response_type=code&prompt=consent"
-		>Login</a
-	>
+	<a :href="loginUrl">Login</a>
 </template>
+
+<script lang="ts">
+import { defineComponent, ref } from "vue";
+
+export default defineComponent({
+	setup() {
+		const loginUrl = ref(
+			"https://auth.atlassian.com/authorize?audience=api.atlassian.com&client_id=o5OphqyH8bmxCcQqnaJvlZFslyyclMm7&scope=read:me&redirect_uri=" +
+				window.location.origin +
+				"/callback&state=123&response_type=code&prompt=consent"
+		);
+
+		return { loginUrl };
+	},
+});
+</script>
