@@ -1,7 +1,7 @@
 <!-- @format -->
 
 <template>
-	<div id="app" class="bg-gray-200 w-full h-screen p-64">
+	<div id="app" class="bg-gray-200 w-full h-screen p-6">
 		<div id="nav">
 		</div>
 	<!-- <p>Start: {{ startTime }}</p>

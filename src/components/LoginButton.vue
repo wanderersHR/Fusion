@@ -1,7 +1,9 @@
 <!-- @format -->
 
 <template>
-	<a :href="loginUrl">Login</a>
+	<div class=" flex justify-center text-lightblu">	
+  		<a :href="loginUrl">Login met atlassian</a>
+	</div>
 </template>
 
 <script lang="ts">
