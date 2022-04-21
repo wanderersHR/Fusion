@@ -2,7 +2,7 @@
 
 <template>
 	<div>
-		<h1>Je moet inloggen op uw atlassian account</h1>
+		<h1 class="text-3xl font-bold underline">Je moet inloggen op uw atlassian account</h1>
 		<LoginButton />
 	</div>
 </template>
