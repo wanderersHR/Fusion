@@ -1,9 +1,9 @@
 <!-- @format -->
 <template>
 	<div>
-		<h1>Test</h1>
-		<LoginButton />
-		<LogoutButton />
+		<h1>Homepage</h1>
+		<LoginButton v-if="!isAuthenticated" />
+		<LogoutButton v-else />
 		<button @click="fetchData">Fetch</button>
 	</div>
 </template>
@@ -35,8 +35,9 @@ export default defineComponent({
 			}
 		}
 
-		return { fetchData };
-		
+		const isAuthenticated = ref(authenticationStore.isAuthenticated);
+
+		return { fetchData, isAuthenticated };
 	},
 	mounted() {
 		fetch("https://blishr.simplicate.nl/api/v2/projects/project", {

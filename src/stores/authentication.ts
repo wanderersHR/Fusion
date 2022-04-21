@@ -22,7 +22,7 @@ export const useAuthenticationStore = defineStore("authentication", {
 				client_id: "o5OphqyH8bmxCcQqnaJvlZFslyyclMm7",
 				client_secret: "SYTQwcrq4w8P5dLl4ZxXybwGT2CmfN_SDv9DJK4FxJfsIxb7sw26PgBe1WrzHPim",
 				code: this.token,
-				redirect_uri: "http://localhost:3000/callback",
+				redirect_uri: window.location.origin + "/callback",
 			};
 
 			fetch("https://auth.atlassian.com/oauth/token", {
@@ -52,7 +52,7 @@ export const useAuthenticationStore = defineStore("authentication", {
 		},
 	},
 	getters: {
-		isAuthenticated: (state) => state.accessToken != undefined,
+		isAuthenticated: (state) => state.accessToken?.access_token != undefined,
 		getBearerToken: (state) => state.accessToken?.access_token,
 	},
 });
