@@ -30,7 +30,7 @@ export const allHours = functions.https.onRequest((request, response) => {
 				const hoursArray: HourResponse[] = res.data.data;
 				const hourObjects = hoursArray.map((hour) => ({
 					totalPrice: hour.tariff * hour.hours,
-					pricePerHour: hour.hours,
+					pricePerHour: hour.tariff,
 					id: hour.id,
 					note: hour.note,
 					hours: hour.hours,
@@ -57,7 +57,7 @@ export const getHoursByTicket = functions.https.onCall((request, response) => {
 			);
 			const hourObjects = filteredHoursArray.map((hour) => ({
 				totalPrice: hour.tariff * hour.hours,
-				pricePerHour: hour.hours,
+				pricePerHour: hour.tariff,
 				id: hour.id,
 				note: hour.note,
 				hours: hour.hours,
