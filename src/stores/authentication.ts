@@ -18,7 +18,6 @@ export const useAuthenticationStore = defineStore("authentication", {
 	actions: {
 		login(token: string) {
 			this.token = token;
-
 			const data = {
 				grant_type: "authorization_code",
 				client_id: "o5OphqyH8bmxCcQqnaJvlZFslyyclMm7",
@@ -26,7 +25,6 @@ export const useAuthenticationStore = defineStore("authentication", {
 				code: this.token,
 				redirect_uri: window.location.origin + "/callback",
 			};
-
 			fetch("https://auth.atlassian.com/oauth/token", {
 				method: "POST",
 				headers: {
@@ -72,6 +70,18 @@ export const useAuthenticationStore = defineStore("authentication", {
 					this.accessToken = data as AccessTokenResponse;
 					localStorage.setItem("accessToken", JSON.stringify(data));
 				});
+		},
+		fetchdata() {
+			if (this.isAuthenticated) {
+				fetch("https://api.atlassian.com/me", {
+					headers: {
+						Authorization: "Bearer " + this.getBearerToken,
+						Accept: "application/json",
+					},
+				})
+					.then((res) => res.json())
+					.then((data) => localStorage.setItem("fetchData", JSON.stringify(data)));
+			}
 		},
 	},
 	getters: {

@@ -4,7 +4,6 @@
 		<h1>Homepage</h1>
 		<LoginButton v-if="!isAuthenticated" />
 		<LogoutButton v-else />
-		<button @click="fetchData">Fetch</button>
 	</div>
 </template>
 
@@ -22,22 +21,9 @@ export default defineComponent({
 	setup() {
 		const authenticationStore = useAuthenticationStore();
 
-		function fetchData() {
-			if (authenticationStore.isAuthenticated) {
-				fetch("https://api.atlassian.com/me", {
-					headers: {
-						Authorization: "Bearer " + authenticationStore.getBearerToken,
-						Accept: "application/json",
-					},
-				})
-					.then((res) => res.json())
-					.then((data) => console.log(data));
-			}
-		}
-
 		const isAuthenticated = ref(authenticationStore.isAuthenticated);
 
-		return { fetchData, isAuthenticated };
+		return { isAuthenticated };
 	},
 });
 </script>
