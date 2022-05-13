@@ -2,6 +2,7 @@
 
 import { defineStore } from "pinia";
 import { json } from "stream/consumers";
+import loginData from "../data.json";
 
 interface AccessTokenResponse {
 	access_token: string;
@@ -19,9 +20,9 @@ export const useAuthenticationStore = defineStore("authentication", {
 		login(token: string) {
 			this.token = token;
 			const data = {
-				grant_type: "authorization_code",
-				client_id: "o5OphqyH8bmxCcQqnaJvlZFslyyclMm7",
-				client_secret: "SYTQwcrq4w8P5dLl4ZxXybwGT2CmfN_SDv9DJK4FxJfsIxb7sw26PgBe1WrzHPim",
+				grant_type: loginData.grant_type,
+				client_id: loginData.client_id,
+				client_secret: loginData.client_secret,
 				code: this.token,
 				redirect_uri: window.location.origin + "/callback",
 			};
@@ -53,8 +54,8 @@ export const useAuthenticationStore = defineStore("authentication", {
 		refresh() {
 			const refreshData = {
 				grant_type: "refresh_token",
-				client_id: "o5OphqyH8bmxCcQqnaJvlZFslyyclMm7",
-				client_secret: "SYTQwcrq4w8P5dLl4ZxXybwGT2CmfN_SDv9DJK4FxJfsIxb7sw26PgBe1WrzHPim",
+				client_id: loginData.client_id,
+				client_secret: loginData.client_secret,
 				refresh_token: this.getRefreshToken,
 			};
 
