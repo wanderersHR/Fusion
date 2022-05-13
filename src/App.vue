@@ -6,6 +6,7 @@
 	<p>Duration: {{ duration }}</p>
 	<p>Response: {{ firebaseMsg }}</p> -->
 
+
 	<router-view />
 </template>
 
@@ -47,6 +48,19 @@ export default defineComponent({
 					console.log("hoi");
 				}, 10 * 1000);
 			}
+
+export default defineComponent({
+	setup() {
+		const firebaseStore = useFirebaseStore();
+
+		firebaseStore.loadFirebase();
+
+		const functions = firebaseStore.functions;
+
+		const hoursOfSingleTicket = httpsCallable(functions, "getHoursByTicket");
+		hoursOfSingleTicket({ ticket: "bs-2" }).then((result) => {
+			const { data } = result;
+			console.log(data);
 		});
 	},
 });
