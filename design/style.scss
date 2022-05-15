@@ -1,0 +1,68 @@
+/** @format */
+@import url("https://fonts.googleapis.com/css2?family=Nunito");
+
+$text: #0d2d57;
+$accent: #0042a3;
+$highlight: #006eff;
+
+*,
+*:before,
+*:after {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+
+:root {
+	font-family: "Nunito", sans-serif;
+	font-size: 18px;
+	color: $text;
+}
+
+body {
+	padding: 1em;
+}
+
+nav {
+	img {
+		height: 2em;
+		width: auto;
+	}
+}
+
+.login-container {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+
+	border-radius: 5px;
+	box-shadow: 30px 30px 30px rgba($color: $highlight, $alpha: 0.05);
+
+	padding: 1em;
+
+	width: 30vw;
+
+	text-align: center;
+
+	h1 {
+		margin-bottom: 0.5em;
+	}
+
+	.login-btn {
+		margin-top: 1em;
+
+		background: $accent;
+		color: white;
+		border: none;
+		padding: 0.5em;
+		cursor: pointer;
+		transition: all 0.2s ease-in-out;
+
+		font-size: 1em;
+
+		&:hover {
+			background: darken($color: $accent, $amount: 10);
+		}
+	}
+}
