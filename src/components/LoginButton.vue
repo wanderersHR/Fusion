@@ -12,18 +12,18 @@ export default defineComponent({
 	setup() {
 		const scopes = [
 			"read:me",
-			"read:account",
-			"read:issue-type:jira",
-			"read:project:jira",
-			"read:project.property:jira",
-			"read:user:jira",
-			"read:application-role:jira",
-			"read:avatar:jira",
-			"read:group:jira",
-			"read:issue-type-hierarchy:jira",
-			"read:project-category:jira",
-			"read:project-version:jira",
-			"read:project.component:jira",
+			// "read:account",
+			// "read:issue-type:jira",
+			// "read:project:jira",
+			// "read:project.property:jira",
+			// "read:user:jira",
+			// "read:application-role:jira",
+			// "read:avatar:jira",
+			// "read:group:jira",
+			// "read:issue-type-hierarchy:jira",
+			// "read:project-category:jira",
+			// "read:project-version:jira",
+			// "read:project.component:jira",
 		].join(" ");
 
 		const loginUrl = ref(

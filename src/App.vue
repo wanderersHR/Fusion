@@ -54,6 +54,9 @@ import { useAuthenticationStore } from "./stores/authentication";
 export default defineComponent({
 	setup() {
 		const firebaseStore = useFirebaseStore();
+		const authStore = useAuthenticationStore();
+
+		authStore.fetchAccessToken();
 
 		firebaseStore.loadFirebase();
 
