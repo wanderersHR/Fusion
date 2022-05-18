@@ -1,9 +1,10 @@
 <!-- @format -->
 
 <template>
-	<div class=" flex justify-center text-lightblu">	
-  		<a :href="loginUrl">Login met atlassian</a>
-	</div>
+	<button class="login-btn">
+		<i class="fab fa-jira"></i>>	
+  		<a :href="loginUrl">Login with Jira</a>
+	</button>
 </template>
 
 <script lang="ts">

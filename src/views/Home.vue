@@ -44,8 +44,8 @@ export default defineComponent({
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
-				"Authentication-Key": "wEp4wAwqFXyAcPmasCsP4WBH21o0gXSZ",
-				"Authentication-Secret": "dBQHfEHMLDlUUESGlvAhq63BOR9hPIrl"
+				"Authentication-Key": "cbSm4s71RmxHJWNdFznQnfmH2T3pHMi7",
+				"Authentication-Secret": "BaRd-4JQq3jHPQdYZkhwEfAKEUkeUhJj9F4q6BLG-FYtd9m1id3qgocRaLmsRvD5"
 			},
 		})
 			.then(res => res.json())

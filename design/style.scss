@@ -29,40 +29,6 @@ nav {
 		width: auto;
 	}
 }
-
-.login-container {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-
-	border-radius: 5px;
-	box-shadow: 30px 30px 30px rgba($color: $highlight, $alpha: 0.05);
-
-	padding: 1em;
-
-	width: 30vw;
-
-	text-align: center;
-
-	h1 {
-		margin-bottom: 0.5em;
-	}
-
-	.login-btn {
-		margin-top: 1em;
-
-		background: $accent;
-		color: white;
-		border: none;
-		padding: 0.5em;
-		cursor: pointer;
-		transition: all 0.2s ease-in-out;
-
-		font-size: 1em;
-
-		&:hover {
-			background: darken($color: $accent, $amount: 10);
-		}
-	}
+.mainnav {
+	display: flex;
 }

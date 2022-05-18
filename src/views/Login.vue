@@ -1,16 +1,28 @@
 <!-- @format -->
 
 <template>
+	<div class="mainnav">
+		<div class="itemnav">
+			<img src="../style sass/logo.svg" alt="Fusion" />
+		</div>	
+		<div class="itemnav">
+		</div>
+		<div class="itemnav">
+			<h3 class="johnav">
+				Welkom John Doe
+			</h3>
+		</div>
+		<div class="itemnav">
+		</div>
+	</div>
 	<div>
-		<Logo />
-		<div class="grid gap-x-12 grid-cols-3 justify-center items-center">
-			<div></div>
-			<div class="box-border rounded-lg shadow-2xl p-10">
-				<h1 class="text-4xl font-bold pt-5 flex justify-center text-darkblu">Log-in</h1>
-				<h3 class="pt-5 flex justify-center text-blu">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h3>
+		<div class="login-container">
+			<h1>Log-in</h1>
+			<p>
+				Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem quae labore hic omnis minima,
+				blanditiis nostrum reprehenderit soluta tempora ex?
+			</p>
 				<LoginButton />
-			</div>
-			<div></div>
 		</div>
 	</div>
 </template>
@@ -18,12 +30,10 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import LoginButton from "../components/LoginButton.vue";
-import Logo from "../components/Logo.vue";
 
 export default defineComponent({
 	components: {
-    LoginButton,
-    Logo
+    LoginButton
 },
 });
 </script>
