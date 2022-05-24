@@ -11,8 +11,9 @@ import loginData from "../data.json";
 export default defineComponent({
 	setup() {
 		const scopes = [
-			"read:me",
+			// "read:me",
 			// "read:account",
+			"read:jira-work",
 			// "read:issue-type:jira",
 			// "read:project:jira",
 			// "read:project.property:jira",
@@ -23,11 +24,14 @@ export default defineComponent({
 			// "read:issue-type-hierarchy:jira",
 			// "read:project-category:jira",
 			// "read:project-version:jira",
-			// "read:project.component:jira",
+			// "read:project-component:jira",
 		].join(" ");
 
+		const JiraDomain = "hr-blis.atlassian.net";
+		const AtlassianDomain = "atlassian.com";
+
 		const loginUrl = ref(
-			`https://auth.atlassian.com/authorize?audience=api.atlassian.com&client_id=${loginData.client_id}&scope=${scopes}&redirect_uri=${window.location.origin}/callback&state=123&response_type=code&prompt=consent`
+			`https://auth.${AtlassianDomain}/authorize?audience=api.atlassian.com&client_id=${loginData.client_id}&scope=${scopes}&redirect_uri=${window.location.origin}/callback&state=123&response_type=code&prompt=consent`
 		);
 
 		return { loginUrl };
