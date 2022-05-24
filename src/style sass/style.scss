@@ -1,5 +1,6 @@
 /** @format */
 @import url("https://fonts.googleapis.com/css2?family=Nunito");
+@import "./mixins.scss";
 
 $text: #0d2d57;
 $accent: #0042a3;
@@ -28,30 +29,32 @@ img {
 	width: auto;
 	margin-right: auto;
 }
-.mainnav {
+.size {
+	@include sm;
+	@include md;
+	@include lg;
+	@include xl;
+}
+.main-nav {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	position: sticky;
 	background-color: white;
 	top: 0;
-	
-	.itemnav {
-	}
-
-	.johnav {
+	.main-nav__name {
 		margin-left: 500px;
 	}
 }
-.mainflex {
+.main-box {
 	display: flex;
 	height: 85vh;
     box-sizing: border-box;
-	.ticketcolumns {
+	.ticket-columns {
 		flex-direction: column;
 		width: 70%;
 		padding: 3px;
-		.ticketbox {
+		.ticket-columns__box {
 			width: 95%;
 			height: 20%;
 			border-radius: 5px;
@@ -63,10 +66,10 @@ img {
 		}
 
 	}
-	.sidecolumns {
+	.side-columns {
 		flex-direction: column;
 		width: 30%;
-		.sidebox {
+		.side-columns__box {
 			width: 95%;
 			height: 60%;
 			border-radius: 5px;
@@ -76,7 +79,7 @@ img {
 				color:#006eff
 			}
 		}
-		.sidebox1 {
+		.side-columns__box--empty1 {
 			width: 100%;
 			height: 40%;
 		}

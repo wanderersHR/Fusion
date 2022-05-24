@@ -1,7 +1,7 @@
 <!-- @format -->
 
 <template>
-	<div class="mainnav">
+	<div class="main-nav">
 		<div class="itemnav">
 			<img src="../style sass/logo.svg" alt="Fusion" />
 		</div>	
@@ -15,15 +15,16 @@
 			</h3>
 		</div>
 		<div class="itemnav">
+			<font-awesome-icon icon="fa-solid fa-user"/>
 		</div>
 	</div>
 	<br>
 	<h2>
 		Overzicht:
 	</h2>
-	<div class="mainflex">
-		<div class="ticketcolumns">
-			<div class="ticketbox">
+	<div class="main-box">
+		<div class="ticket-columns">
+			<div class="ticket-columns__box">
 				<h4>
 					Ticket #123
 				</h4>
@@ -34,7 +35,7 @@
 					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
 				</p>
 			</div>
-			<div class="ticketbox">
+			<div class="ticket-columns__box">
 				<h4>
 					Ticket #123
 				</h4>
@@ -45,7 +46,7 @@
 					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
 				</p>
 			</div>
-			<div class="ticketbox">
+			<div class="ticket-columns__box">
 				<h4>
 					Ticket #123
 				</h4>
@@ -56,7 +57,7 @@
 					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
 				</p>
 			</div>
-			<div class="ticketbox">
+			<div class="ticket-columns__box">
 				<h4>
 					Ticket #123
 				</h4>
@@ -67,7 +68,7 @@
 					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
 				</p>
 			</div>
-			<div class="ticketbox">
+			<div class="ticket-columns__box">
 				<h4>
 					Ticket #123
 				</h4>
@@ -79,8 +80,8 @@
 				</p>
 			</div>
 		</div>
-		<div class="sidecolumns">
-			<div class="sidebox">
+		<div class="side-columns">
+			<div class="side-columns__box">
 				<h2>
 					Tickets:
 				</h2>
@@ -102,7 +103,7 @@
 					€7600
 				</h1>
 			</div>
-			<div class="sidebox1">
+			<div class="side-columns__box--empty1">
 			</div>
 		</div>
 	</div>
