@@ -6,28 +6,40 @@
 
 <script lang="ts">
 import { httpsCallable } from "firebase/functions";
-import { defineComponent, onBeforeMount } from "vue";
+import { defineComponent, onBeforeMount, onMounted } from "vue";
 import { useAuthenticationStore } from "../stores/authentication";
 import { useFirebaseStore } from "../stores/firebase";
 
 export default defineComponent({
-	setup() {},
+	setup() {
+		onMounted(() => {
+			console.log("Protected.vue mounted");
 
-	onMounted() {
-		console.log("Protected.vue mounted");
+			const firebaseStore = useFirebaseStore();
 
-		const firebaseStore = useFirebaseStore();
+			firebaseStore.loadFirebase();
 
-		firebaseStore.loadFirebase();
+			const authenticationStore = useAuthenticationStore();
 
-		const authenticationStore = useAuthenticationStore();
+			const functions = firebaseStore.functions;
 
-		const functions = firebaseStore.functions;
+			const projects = httpsCallable(functions, "getProjects");
+			projects().then((result) => {
+				const { data } = result;
 
-		const projects = httpsCallable(functions, "getProjects");
-		projects({ bearerToken: authenticationStore.getBearerToken }).then((result) => {
-			const { data } = result;
-			console.log(data);
+				const projectInfo = httpsCallable(functions, "getProject");
+
+				(data as any).forEach((project: any) => {
+					console.log(project);
+
+					projectInfo({ id: project.id }).then((result2: any) => {
+						console.log("Get project " + project.id);
+						console.log(result2);
+					});
+				});
+			});
+
+			console.log("Get projects");
 		});
 	},
 });

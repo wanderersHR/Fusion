@@ -7,6 +7,8 @@ import { Hour, HourResponse } from "./models";
 const corsHandler = cors({ origin: true });
 
 const JiraDomain = "https://hr-blis.atlassian.net/rest/api/3";
+const JiraApiToken = "hrprojectd@gmail.com:OAFJai3fCDV5IMLzyQhR69B2";
+const JiraApiTokenHeader = "Basic " + Buffer.from(JiraApiToken).toString("base64");
 
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
@@ -39,6 +41,9 @@ export const allHours = functions.https.onRequest((request, response) => {
 				}));
 
 				return response.json({ data: hourObjects });
+			})
+			.catch((err) => {
+				return response.json({ data: err });
 			});
 	});
 });
@@ -78,11 +83,51 @@ export const getProjects = functions.https.onCall((request, response) => {
 		.get(`${JiraDomain}/project/search`, {
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: "Bearer " + request.bearerToken,
+				Authorization: JiraApiTokenHeader,
 				Accept: "application/json",
 			},
 		})
 		.then((res) => {
 			return res.data.values;
+		})
+		.catch((err) => {
+			console.log(err);
+
+			return {
+				error: "Something went wrong",
+				headers: err.headers,
+				status: err.status,
+			};
+		});
+});
+
+export const getProject = functions.https.onCall((request, response) => {
+	if (!request.projectId && !request.id) {
+		return { error: "Project id is required" };
+	}
+
+	const id = request.projectId || request.id;
+
+	// https://hr-blis.atlassian.net/rest/api/3/search?jql=project=AHold <-- get issues
+
+	return axios
+		.get(`${JiraDomain}/project/${id}`, {
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: JiraApiTokenHeader,
+				Accept: "application/json",
+			},
+		})
+		.then((res) => {
+			return res.data.values;
+		})
+		.catch((err) => {
+			console.log(err);
+
+			return {
+				error: "Something went wrong",
+				headers: err.headers,
+				status: err.status,
+			};
 		});
 });
