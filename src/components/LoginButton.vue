@@ -11,9 +11,9 @@ import loginData from "../data.json";
 export default defineComponent({
 	setup() {
 		const scopes = [
-			// "read:me",
-			// "read:account",
-			"read:jira-work",
+			"read:me",
+			"read:account",
+			// "read:jira-work",
 			// "read:issue-type:jira",
 			// "read:project:jira",
 			// "read:project.property:jira",
