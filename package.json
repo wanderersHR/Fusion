@@ -6,7 +6,8 @@
 		"dev": "npm i && vite && npm run cloud",
 		"build": "npm i && vue-tsc --noEmit && vite build && npm run cloud",
 		"preview": "npm i && vite preview",
-		"cloud": "cd ./functions && npm i && npm run build && cd .."
+		"cloud": "cd ./functions && npm i && npm run build && cd ..",
+		"start": "npm i && npm run build && npm run cloud && firebase emulators:start"
 	},
 	"dependencies": {
 		"firebase": "^9.6.10",

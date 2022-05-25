@@ -6,6 +6,8 @@ import axios from "axios";
 import { Hour, HourResponse } from "./models";
 const corsHandler = cors({ origin: true });
 
+const JiraDomain = "https://hr-blis.atlassian.net/rest/api/3";
+
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
 
@@ -68,5 +70,19 @@ export const getHoursByTicket = functions.https.onCall((request, response) => {
 			}
 
 			return { data: "Hours with that ticket not found" };
+		});
+});
+
+export const getProjects = functions.https.onCall((request, response) => {
+	return axios
+		.get(`${JiraDomain}/project/search`, {
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: "Bearer " + request.bearerToken,
+				Accept: "application/json",
+			},
+		})
+		.then((res) => {
+			return res.data.values;
 		});
 });
