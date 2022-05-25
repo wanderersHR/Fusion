@@ -102,16 +102,15 @@ export const getProjects = functions.https.onCall((request, response) => {
 });
 
 export const getProject = functions.https.onCall((request, response) => {
-	if (!request.projectId && !request.id) {
-		return { error: "Project id is required" };
+	if (!request.projectName && !request.name) {
+		return { error: "Project name is required" };
 	}
 
-	const id = request.projectId || request.id;
-
-	// https://hr-blis.atlassian.net/rest/api/3/search?jql=project=AHold <-- get issues
+	const name = request.projectName || request.name;
+	console.log(`${JiraDomain}/search?jql=project=${name}&maxResults=10000`);
 
 	return axios
-		.get(`${JiraDomain}/project/${id}`, {
+		.get(`${JiraDomain}/search?jql=project=${name}&maxResults=10000`, {
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: JiraApiTokenHeader,

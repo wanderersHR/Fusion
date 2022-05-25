@@ -30,10 +30,11 @@ export default defineComponent({
 				const projectInfo = httpsCallable(functions, "getProject");
 
 				(data as any).forEach((project: any) => {
+					console.log("Get project" + project.id);
 					console.log(project);
 
-					projectInfo({ id: project.id }).then((result2: any) => {
-						console.log("Get project " + project.id);
+					projectInfo({ name: project.name }).then((result2: any) => {
+						console.log("Get project tickets" + project.id);
 						console.log(result2);
 					});
 				});
