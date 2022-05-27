@@ -80,7 +80,7 @@ export const getHoursByTicket = functions.https.onCall((request, response) => {
 
 export const getProjects = functions.https.onCall((request, response) => {
 	return axios
-		.get(`${JiraDomain}/project/search`, {
+		.get(`${JiraDomain}/project/search?expand=description,url,permissions`, {
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: JiraApiTokenHeader,
