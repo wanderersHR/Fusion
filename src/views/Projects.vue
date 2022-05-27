@@ -5,7 +5,7 @@
 
 	<div v-if="projects.length > 0" class="projects">
 		<div class="project" v-for="project in projects" v-bind:key="project.id">
-			<router-link :to="`/project/${project.name}`">
+			<router-link :to="`/projects/${project.name}`">
 				<img :src="project.avatarUrls['48x48']" :alt="project.name" width="200" height="200" />
 				<h2>{{ project.name }}</h2>
 			</router-link>
