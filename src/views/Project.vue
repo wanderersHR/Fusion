@@ -25,9 +25,9 @@ export default defineComponent({
 			const projectInfo = httpsCallable(functions, "getProject");
 
 			console.log("Get project " + projectName);
-			projectInfo({ name: projectName }).then((result2: any) => {
+			projectInfo({ name: projectName }).then((result: any) => {
 				console.log("Get project tickets " + projectName);
-				console.log(result2);
+				console.log(result);
 			});
 		});
 
