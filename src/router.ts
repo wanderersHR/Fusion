@@ -29,6 +29,12 @@ const routes: RouteRecordRaw[] = [
 		component: () => import("./views/Projects.vue"),
 		beforeEnter: [auth],
 	},
+	{
+		path: "/projects/:name",
+		name: "projects-name",
+		component: () => import("./views/Project.vue"),
+		beforeEnter: [auth],
+	},
 ];
 
 const router = createRouter({

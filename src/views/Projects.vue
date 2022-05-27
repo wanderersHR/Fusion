@@ -5,10 +5,10 @@
 
 	<div v-if="projects.length > 0" class="projects">
 		<div class="project" v-for="project in projects" v-bind:key="project.id">
-			<a :href="project.self">
+			<router-link :to="`/project/${project.name}`">
 				<img :src="project.avatarUrls['48x48']" :alt="project.name" width="200" height="200" />
 				<h2>{{ project.name }}</h2>
-			</a>
+			</router-link>
 		</div>
 	</div>
 
@@ -88,18 +88,6 @@ export default defineComponent({
 				const { data } = result as { data: JiraProject[] };
 
 				projects.value = data;
-
-				// const projectInfo = httpsCallable(functions, "getProject");
-
-				// (data as any).forEach((project: any) => {
-				// 	console.log("Get project" + project.id);
-				// 	console.log(project);
-
-				// 	projectInfo({ name: project.name }).then((result2: any) => {
-				// 		console.log("Get project tickets" + project.id);
-				// 		console.log(result2);
-				// 	});
-				// });
 			});
 
 			console.log("Get projects");
