@@ -51,6 +51,8 @@ import { useAuthenticationStore } from "./stores/authentication";
 
 // });
 
+import "./index.scss";
+
 export default defineComponent({
 	setup() {
 		const firebaseStore = useFirebaseStore();
