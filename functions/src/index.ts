@@ -7,8 +7,8 @@ import { Hour, HourResponse } from "./models";
 const corsHandler = cors({ origin: true });
 
 const JiraDomain = "https://hr-blis.atlassian.net/rest/api/3";
-const JiraApiToken = "hrprojectd@gmail.com:OAFJai3fCDV5IMLzyQhR69B2";
-const JiraApiTokenHeader = "Basic " + Buffer.from(JiraApiToken).toString("base64");
+const JiraApiToken = process.env.JIRA_TOKEN;
+const JiraApiTokenHeader = "Basic " + Buffer.from(JiraApiToken || "").toString("base64");
 
 // Start writing Firebase Functions
 // https://firebase.google.com/docs/functions/typescript
@@ -108,8 +108,6 @@ export const getProject = functions.https.onCall((request, response) => {
 
 	const name = request.projectName || request.name;
 	const jqlUrl = `${JiraDomain}/search?jql=project="${name}"&maxResults=2147483647`;
-
-	console.log(jqlUrl);
 
 	return axios
 		.get(jqlUrl, {
