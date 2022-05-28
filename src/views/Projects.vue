@@ -68,7 +68,7 @@
 import { httpsCallable } from "firebase/functions";
 import { defineComponent, onMounted, ref } from "vue";
 import { useFirebaseStore } from "../stores/firebase";
-import { JiraProject } from "../types/JiraProject";
+import { JiraProject } from "../JiraResponses/JiraProject";
 
 export default defineComponent({
 	setup() {

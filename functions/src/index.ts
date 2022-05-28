@@ -10,8 +10,8 @@ const JiraDomain = "https://hr-blis.atlassian.net/rest/api/3";
 const JiraApiToken = "hrprojectd@gmail.com:OAFJai3fCDV5IMLzyQhR69B2";
 const JiraApiTokenHeader = "Basic " + Buffer.from(JiraApiToken).toString("base64");
 
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
+// Start writing Firebase Functions
+// https://firebase.google.com/docs/functions/typescript
 
 export const helloWorld = functions.https.onRequest((request, response) => {
 	corsHandler(request, response, () => {
@@ -107,10 +107,12 @@ export const getProject = functions.https.onCall((request, response) => {
 	}
 
 	const name = request.projectName || request.name;
-	console.log(`${JiraDomain}/search?jql=project=${name}&maxResults=10000`);
+	const jqlUrl = `${JiraDomain}/search?jql=project="${name}"&maxResults=2147483647`;
+
+	console.log(jqlUrl);
 
 	return axios
-		.get(`${JiraDomain}/search?jql=project=${name}&maxResults=10000`, {
+		.get(jqlUrl, {
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: JiraApiTokenHeader,
@@ -118,7 +120,7 @@ export const getProject = functions.https.onCall((request, response) => {
 			},
 		})
 		.then((res) => {
-			return res.data.values;
+			return res.data;
 		})
 		.catch((err) => {
 			console.log(err);
