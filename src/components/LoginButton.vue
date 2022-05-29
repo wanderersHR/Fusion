@@ -2,7 +2,7 @@
 
 <template>
 	<button class="login-btn">
-		<i class="fab fa-jira"></i>	
+		<font-awesome-icon icon="user" />
   		<a :href="loginUrl">Login with Jira</a>
 	</button>
 </template>

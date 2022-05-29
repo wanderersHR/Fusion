@@ -23,7 +23,7 @@
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem quae labore hic omnis minima,
 					blanditiis nostrum reprehenderit soluta tempora ex?
 				</p>
-					<LoginButton />
+				<LoginButton />
 			</div>
 		</div>
 	</div>

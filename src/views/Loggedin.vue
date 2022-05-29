@@ -2,20 +2,20 @@
 
 <template>
 	<div class="main-nav">
-		<div class="itemnav">
+		<div>
 			<img src="../style sass/logo.svg" alt="Fusion" />
 		</div>	
-		<div class="itemnav">
+		<div>
 		</div>
-		<div class="itemnav">
+		<div>
 		</div>
-		<div class="itemnav">
-			<h3 class="johnav">
+		<div>
+			<h3 class="main-nav__name">
 				Welkom John Doe
 			</h3>
 		</div>
-		<div class="itemnav">
-			<font-awesome-icon icon="fa-solid fa-user"/>
+		<div>
+			<font-awesome-icon icon="arrow-right-to-bracket" />
 		</div>
 	</div>
 	<br>
@@ -103,7 +103,7 @@
 					€7600
 				</h1>
 			</div>
-			<div class="side-columns__box--empty1">
+			<div class="side-columns__box--empty">
 			</div>
 		</div>
 	</div>
