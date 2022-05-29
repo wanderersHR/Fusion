@@ -1,5 +1,6 @@
 {
 	"grant_type": "authorization_code",
 	"client_id": "cbSm4s71RmxHJWNdFznQnfmH2T3pHMi7",
-	"client_secret": "BaRd-4JQq3jHPQdYZkhwEfAKEUkeUhJj9F4q6BLG-FYtd9m1id3qgocRaLmsRvD5"
+	"client_secret": "BaRd-4JQq3jHPQdYZkhwEfAKEUkeUhJj9F4q6BLG-FYtd9m1id3qgocRaLmsRvD5",
+	"api-token": "OAFJai3fCDV5IMLzyQhR69B2"
 }

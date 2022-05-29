@@ -1,0 +1,46 @@
+<!-- @format -->
+
+<template>
+	<h1>Projects</h1>
+
+	<div v-if="projects.length > 0" class="projects">
+		<Project v-for="project in projects" v-bind:key="project.id" v-bind:project="project" />
+	</div>
+
+	<div v-else>
+		<Loader />
+	</div>
+</template>
+
+<script lang="ts">
+import { httpsCallable } from "firebase/functions";
+import { defineComponent, onMounted, ref } from "vue";
+import { useFirebaseStore } from "../stores/firebase";
+import { JiraProject } from "../JiraResponses/JiraProject";
+import Loader from "../components/Loader.vue";
+import Project from "../components/Project.vue";
+
+export default defineComponent({
+	setup() {
+		const projects = ref<JiraProject[]>([]);
+
+		onMounted(() => {
+			const firebaseStore = useFirebaseStore();
+			firebaseStore.loadFirebase();
+			const functions = firebaseStore.functions;
+
+			const projectGetter = httpsCallable(functions, "getProjects");
+			projectGetter().then((result) => {
+				const { data } = result as {
+					data: JiraProject[];
+				};
+				projects.value = data;
+			});
+		});
+		return {
+			projects,
+		};
+	},
+	components: { Loader, Project },
+});
+</script>
