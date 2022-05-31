@@ -9,9 +9,6 @@
 			<div>
 			</div>
 			<div>
-				<h3 class="main-nav__name">
-					Welkom John Doe
-				</h3>
 			</div>
 			<div>
 			</div>
