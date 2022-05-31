@@ -13,31 +13,37 @@ const routes: RouteRecordRaw[] = [
 	{
 		path: "/",
 		name: "home",
-		component: Home,
+		component: () => import("./views/Home.vue"),
 		beforeEnter: [auth],
 	},
 	{
 		path: "/callback",
 		name: "callback",
-		component: Callback,
+		component: () => import("./views/Callback.vue"),
 		beforeEnter: [guest],
 	},
 	{
 		path: "/login",
 		name: "login",
-		component: Login,
+		component: () => import("./views/Login.vue"),
 		beforeEnter: [guest],
 	},
 	{
+		path: "/projects",
+		name: "projects",
+		component: () => import("./views/Projects.vue"),
+        beforeEnter: [auth],
+    },
+    {
 		path: "/Loggedin",
 		name: "Loggedin",
 		component: Loggedin,
 		beforeEnter: [guest],
 	},
 	{
-		path: "/protected",
-		name: "protected",
-		component: Protected,
+		path: "/projects/:name",
+		name: "projects-name",
+		component: () => import("./views/Project.vue"),
 		beforeEnter: [auth],
 	},
 ];

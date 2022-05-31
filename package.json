@@ -6,13 +6,15 @@
 		"dev": "npm i && vite && npm run cloud",
 		"build": "npm i && vue-tsc --noEmit && vite build && npm run cloud",
 		"preview": "npm i && vite preview",
-		"cloud": "cd ./functions && npm i && npm run build && cd .."
+		"cloud": "cd ./functions && npm i && npm run build && cd ..",
+		"start": "npm i && npm run build && npm run cloud && firebase emulators:start"
 	},
 	"dependencies": {
 		"@fortawesome/fontawesome-svg-core": "^6.1.1",
 		"@fortawesome/free-solid-svg-icons": "^6.1.1",
 		"@fortawesome/vue-fontawesome": "^3.0.0-5",
 		"firebase": "^9.6.10",
+		"moment": "^2.29.3",
 		"pinia": "^2.0.12",
 		"sass": "^1.49.9",
 		"vue": "^3.2.25",

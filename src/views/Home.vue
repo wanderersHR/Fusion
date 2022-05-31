@@ -19,7 +19,9 @@ export default defineComponent({
 	},
 	setup() {
 		const authenticationStore = useAuthenticationStore();
+
 		const isAuthenticated = ref(authenticationStore.isAuthenticated);
+
 		return { isAuthenticated };
 	},
 });
