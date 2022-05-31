@@ -1,12 +1,22 @@
 <!-- @format -->
 <template>
-	<h1>Project {{ projectName }}</h1>
+	<div class="main-nav">
+		<div>
+			<img src="/logo.svg" alt="Fusion" class="main-nav__logo" />
+		</div>
+		<div>
+			<h2 class="main-nav__name">Welcome User</h2>
+		</div>
+	</div>
+	<h1 style="text-align: center">Project {{ projectName }}</h1>
 
-	<div v-if="issues.length > 0" class="issues">
-		<IssueComponent v-for="issue in issues" v-bind:key="issue.id" v-bind:issue="issue" />
+	<div v-if="issues.length > 0" class="main-box">
+		<div class="ticket-columns">
+			<IssueComponent v-for="issue in issues" v-bind:key="issue.id" v-bind:issue="issue" />
+		</div>
 	</div>
 
-	<div v-else>
+	<div v-else class="loader">
 		<Loader />
 	</div>
 </template>

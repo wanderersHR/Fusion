@@ -1,10 +1,16 @@
 /** @format */
-@import url("https://fonts.googleapis.com/css2?family=Nunito");
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
 @import "./mixins.scss";
 
 $text: #0d2d57;
 $accent: #0042a3;
 $highlight: #006eff;
+$shadow: 30px 30px 30px
+	rgba(
+		$color: $highlight,
+		$alpha: 0.1,
+	);
 
 *,
 *:before,
@@ -22,19 +28,21 @@ $highlight: #006eff;
 
 body {
 	padding: 1em;
+
+	h1 {
+		margin-bottom: 0.5em;
+		font-weight: 800;
+		color: $text;
+	}
 }
 
-img {
-	height: 2em;
-	width: auto;
-	margin-right: auto;
-}
 .size {
 	@include sm;
 	@include md;
 	@include lg;
 	@include xl;
 }
+
 .main-nav {
 	display: flex;
 	align-items: center;
@@ -43,14 +51,20 @@ img {
 	background-color: white;
 	top: 0;
 
+	.main-nav__logo {
+		height: 2em;
+		width: auto;
+		margin-right: auto;
+	}
+
 	.main-nav__name {
-		margin-left: 1500px;
+		justify-content: right;
 	}
 }
+
 .main-box {
 	display: flex;
-	height: 85vh;
-    box-sizing: border-box;
+	box-sizing: border-box;
 
 	.ticket-columns {
 		flex-direction: column;
@@ -58,19 +72,39 @@ img {
 		padding: 3px;
 
 		.ticket-columns__box {
-			width: 95%;
-			height: 20%;
+			width: fit-content;
+			height: fit-content;
 
 			border-radius: 5px;
-			box-shadow: 30px 30px 30px rgba($color: $highlight, $alpha: 0.05);
-			padding: 1em;
+			box-shadow: $shadow;
+			padding: 2em;
 
-			h4 {
-				color:#006eff
+			.ticket-columns__box__id {
+				display: block;
+				color: $accent;
+				font-size: larger;
+				font-weight: bold;
+			}
+			.ticket-columns__box__label {
+				display: block;
+				color: $text;
+				font-size: larger;
+				font-weight: bold;
+			}
+			.ticket-columns__box__description {
+				display: block;
+				color: $text;
+				font-weight: bold;
+			}
+			.ticket-columns__box__details {
+				display: block;
+				padding-top: 0.5em;
+				color: #006eff;
+				text-align: right;
 			}
 		}
-
 	}
+
 	.side-columns {
 		flex-direction: column;
 		width: 30%;
@@ -80,13 +114,14 @@ img {
 			height: 60%;
 
 			border-radius: 5px;
-			box-shadow: 30px 30px 30px rgba($color: $highlight, $alpha: 0.05);
+			box-shadow: $shadow;
 			padding: 3em;
-			
+
 			h1 {
-				color:#006eff
+				color: $highlight;
 			}
 		}
+
 		.side-columns__box--empty {
 			width: 100%;
 			height: 40%;
@@ -95,38 +130,71 @@ img {
 }
 
 .login-container {
+	display: block;
+
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 
 	border-radius: 5px;
-	box-shadow: 30px 30px 30px rgba($color: $highlight, $alpha: 0.05);
+	box-shadow: $shadow;
 
-	padding: 1em;
+	padding: 1.8em;
 
 	width: 30vw;
+	height: fit-content;
 
 	text-align: center;
 
-	h1 {
-		margin-bottom: 0.5em;
-	}
-
 	.login-btn {
-		margin-top: 1em;
+		display: block;
+
+		margin-top: 2em;
 
 		background: $accent;
-		color: white;
 		border: none;
 		padding: 0.5em;
 		cursor: pointer;
 		transition: all 0.2s ease-in-out;
 
-		font-size: 1em;
+		color: white;
+		text-decoration: none;
+
+		/* Font Awesome Icon */
+		i {
+			margin-right: 1ch;
+		}
 
 		&:hover {
 			background: darken($color: $accent, $amount: 10);
 		}
 	}
+	.logout-btn {
+		margin-top: 2em;
+
+		background: $accent;
+		border: none;
+		padding: 1em;
+		cursor: pointer;
+		transition: all 0.2s ease-in-out;
+		color: white;
+		text-decoration: none;
+		/* Font Awesome Icon */
+		i {
+			margin-right: 1ch;
+		}
+
+		&:hover {
+			background: darken($color: $accent, $amount: 10);
+		}
+	}
+}
+.loader {
+	display: block;
+
+	position: absolute;
+	top: 30%;
+	left: 50%;
+	transform: translate(-30%, -50%);
 }

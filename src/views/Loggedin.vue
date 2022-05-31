@@ -3,7 +3,6 @@
 <template>
 	<div class="main-nav">
 		<div>
-			<img src="../style sass/logo.svg" alt="Fusion" />
 		</div>	
 		<div>
 		</div>

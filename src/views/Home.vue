@@ -1,9 +1,21 @@
 <!-- @format -->
 <template>
 	<div>
-		<h1>Homepage</h1>
-		<LoginButton v-if="!isAuthenticated" />
-		<LogoutButton v-else />
+		<div class="main-nav">
+			<div>
+				<img src="/logo.svg" alt="Fusion" class="main-nav__logo" />
+			</div>
+			<div>
+				<h2 class="main-nav__name">Welcome User</h2>
+			</div>
+		</div>
+		<h1 style="text-align: center">Home</h1>
+		<div class="login-container">
+			<h1>Logout</h1>
+			<p>You can log out here or go back to the open Projects.</p>
+			<LoginButton v-if="!isAuthenticated" />
+			<LogoutButton v-else />
+		</div>
 	</div>
 </template>
 

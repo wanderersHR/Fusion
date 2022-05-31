@@ -4,22 +4,13 @@
 	<div class="size">
 		<div class="main-nav">
 			<div>
-				<img src="../style sass/logo.svg" alt="Fusion" />
-			</div>	
-			<div>
-			</div>
-			<div>
-			</div>
-			<div>
+				<img src="/logo.svg" alt="Fusion" class="main-nav__logo" />
 			</div>
 		</div>
 		<div>
 			<div class="login-container">
-				<h1>Log-in</h1>
-				<p>
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem quae labore hic omnis minima,
-					blanditiis nostrum reprehenderit soluta tempora ex?
-				</p>
+				<h1>Login</h1>
+				<p>Log in here with your Jira account. You'll be send back to our webpage instantly!</p>
 				<LoginButton />
 			</div>
 		</div>
@@ -32,7 +23,7 @@ import LoginButton from "../components/LoginButton.vue";
 
 export default defineComponent({
 	components: {
-    LoginButton
-},
+		LoginButton,
+	},
 });
 </script>

@@ -1,10 +1,10 @@
 <!-- @format -->
 
 <template>
-	<button class="login-btn">
-		<font-awesome-icon icon="user" />
-  		<a :href="loginUrl">Login with Jira</a>
-	</button>
+	<a :href="loginUrl" class="login-btn">
+		<i class="fa-brands fa-jira"></i>
+		<span>Login with Jira</span>
+	</a>
 </template>
 
 <script lang="ts">

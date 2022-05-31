@@ -1,13 +1,21 @@
 <!-- @format -->
 
 <template>
-	<h1>Projects</h1>
+	<div class="main-nav">
+		<div>
+			<img src="/logo.svg" alt="Fusion" class="main-nav__logo" />
+		</div>
+		<div>
+			<h2 class="main-nav__name">Welcome User</h2>
+		</div>
+	</div>
+	<h1 style="text-align: center">Projects</h1>
 
 	<div v-if="projects.length > 0" class="projects">
 		<Project v-for="project in projects" v-bind:key="project.id" v-bind:project="project" />
 	</div>
 
-	<div v-else>
+	<div v-else class="loader">
 		<Loader />
 	</div>
 </template>

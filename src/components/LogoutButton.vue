@@ -1,7 +1,9 @@
 <!-- @format -->
 
 <template>
-	<button @click="logout"><font-awesome-icon icon="arrow-right-to-bracket" /></button>
+	<button @click="logout" class="logout-btn">
+		<i class="fa-solid fa-arrow-right-from-bracket"></i><span>Logout</span>
+	</button>
 </template>
 
 <script lang="ts">
