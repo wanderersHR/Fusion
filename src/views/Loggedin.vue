@@ -15,7 +15,7 @@
 			</h3>
 		</div>
 		<div>
-			<font-awesome-icon icon="arrow-right-to-bracket" />
+			<LogoutButton />
 		</div>
 	</div>
 	<br>
@@ -24,28 +24,6 @@
 	</h2>
 	<div class="main-box">
 		<div class="ticket-columns">
-			<div class="ticket-columns__box">
-				<h4>
-					Ticket #123
-				</h4>
-				<h3>
-					Lorem ipsum dolor sit amet consectetur adipisicing elit.
-				</h3>
-				<p>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-				</p>
-			</div>
-			<div class="ticket-columns__box">
-				<h4>
-					Ticket #123
-				</h4>
-				<h3>
-					Lorem ipsum dolor sit amet consectetur adipisicing elit.
-				</h3>
-				<p>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-				</p>
-			</div>
 			<div class="ticket-columns__box">
 				<h4>
 					Ticket #123
@@ -111,11 +89,11 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import LoginButton from "../components/LoginButton.vue";
+import LogoutButton from "../components/LogoutButton.vue";
 
 export default defineComponent({
 	components: {
-    LoginButton
+    LogoutButton
 },
 });
 </script>
