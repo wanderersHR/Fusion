@@ -1,18 +1,16 @@
 <!-- @format -->
 
 <template>
-	<div class="size">
-		<div class="main-nav">
-			<div>
-				<img src="/logo.svg" alt="Fusion" class="main-nav__logo" />
-			</div>
-		</div>
+	<div class="main-nav">
 		<div>
-			<div class="login-container">
-				<h1>Login</h1>
-				<p>Log in here with your Jira account. You'll be send back to our webpage instantly!</p>
-				<LoginButton />
-			</div>
+			<img src="/logo.svg" alt="Fusion" class="main-nav__logo" />
+		</div>
+	</div>
+	<div>
+		<div class="login-container">
+			<h1>Login</h1>
+			<p>Log in here with your Jira account. You'll be send back to our webpage instantly!</p>
+			<LoginButton />
 		</div>
 	</div>
 </template>

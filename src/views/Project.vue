@@ -1,13 +1,6 @@
 <!-- @format -->
 <template>
-	<div class="main-nav">
-		<div>
-			<img src="/logo.svg" alt="Fusion" class="main-nav__logo" />
-		</div>
-		<div>
-			<h2 class="main-nav__name">Welcome User</h2>
-		</div>
-	</div>
+	<Navigation />
 	<h1 style="text-align: center">Project {{ projectName }}</h1>
 
 	<div v-if="issues.length > 0" class="main-box">
@@ -25,6 +18,7 @@
 import { httpsCallable } from "firebase/functions";
 import { defineComponent, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
+import Navigation from "../components/Navigation.vue";
 import { useFirebaseStore } from "../stores/firebase";
 import { Issue, JiraProjectDetails } from "../JiraResponses/JiraProjectDetail";
 
@@ -54,6 +48,6 @@ export default defineComponent({
 
 		return { projectName, issues };
 	},
-	components: { Loader, IssueComponent },
+	components: { Loader, IssueComponent, Navigation },
 });
 </script>

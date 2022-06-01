@@ -1,14 +1,7 @@
 <!-- @format -->
 
 <template>
-	<div class="main-nav">
-		<div>
-			<img src="/logo.svg" alt="Fusion" class="main-nav__logo" />
-		</div>
-		<div>
-			<h2 class="main-nav__name">Welcome User</h2>
-		</div>
-	</div>
+	<Navigation />
 	<h1 style="text-align: center">Projects</h1>
 
 	<div v-if="projects.length > 0" class="projects">
@@ -26,6 +19,7 @@ import { defineComponent, onMounted, ref } from "vue";
 import { useFirebaseStore } from "../stores/firebase";
 import { JiraProject } from "../JiraResponses/JiraProject";
 import Loader from "../components/Loader.vue";
+import Navigation from "../components/Navigation.vue";
 import Project from "../components/Project.vue";
 import { useAuthenticationStore } from "../stores/authentication";
 
@@ -52,7 +46,7 @@ export default defineComponent({
 			projects,
 		};
 	},
-	components: { Loader, Project },
+	components: { Loader, Project, Navigation },
 });
 /*var longest = arr.sort(
 			function (a, b) {

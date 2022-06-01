@@ -58,7 +58,7 @@ body {
 	}
 
 	.main-nav__name {
-		justify-content: right;
+		text-align: right;
 	}
 }
 
@@ -177,24 +177,24 @@ body {
 			background: darken($color: $accent, $amount: 10);
 		}
 	}
-	.logout-btn {
-		margin-top: 2em;
+}
+.logout-btn {
+	margin-top: 2em;
 
-		background: $accent;
-		border: none;
-		padding: 1em;
-		cursor: pointer;
-		transition: all 0.2s ease-in-out;
-		color: white;
-		text-decoration: none;
-		/* Font Awesome Icon */
-		i {
-			margin-right: 1ch;
-		}
+	background: $accent;
+	border: none;
+	padding: 1em;
+	cursor: pointer;
+	transition: all 0.2s ease-in-out;
+	color: white;
+	text-decoration: none;
+	/* Font Awesome Icon */
+	i {
+		margin-right: 1ch;
+	}
 
-		&:hover {
-			background: darken($color: $accent, $amount: 10);
-		}
+	&:hover {
+		background: darken($color: $accent, $amount: 10);
 	}
 }
 .loader {
@@ -225,7 +225,8 @@ body {
 		cursor: pointer;
 		transition: all 0.2s ease-in-out;
 		&:hover {
-			background: darken($color: rgba(240, 239, 239, 0.546), $amount: 10);
+			transform: scale(1.1);
+			z-index: 100;
 		}
 	}
 }
