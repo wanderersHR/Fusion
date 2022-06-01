@@ -72,7 +72,7 @@ body {
 		padding: 3px;
 
 		.ticket-columns__box {
-			width: fit-content;
+			width: 100%;
 			height: fit-content;
 
 			border-radius: 5px;
@@ -82,19 +82,19 @@ body {
 			cursor: pointer;
 			transition: all 0.2s ease-in-out;
 			&:hover {
-				background: darken($color: rgb(240, 239, 239), $amount: 10);
+				background: darken($color: rgba(240, 239, 239, 0.546), $amount: 10);
 			}
 
 			.ticket-columns__box__id {
 				display: block;
 				color: $accent;
-				font-size: larger;
+				font-size: 0.8em;
 				font-weight: bold;
 			}
 			.ticket-columns__box__label {
 				display: block;
 				color: $text;
-				font-size: larger;
+				font-size: 1.5em;
 				font-weight: bold;
 			}
 			.ticket-columns__box__description {
@@ -107,6 +107,7 @@ body {
 				padding-top: 0.5em;
 				color: #006eff;
 				text-align: right;
+				font-size: 0.8em;
 			}
 		}
 	}
@@ -219,11 +220,12 @@ body {
 
 		width: fit-content;
 		height: fit-content;
+		text-align: center;
 
 		cursor: pointer;
 		transition: all 0.2s ease-in-out;
 		&:hover {
-			background: darken($color: rgb(240, 239, 239), $amount: 10);
+			background: darken($color: rgba(240, 239, 239, 0.546), $amount: 10);
 		}
 	}
 }
