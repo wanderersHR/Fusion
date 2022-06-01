@@ -79,6 +79,12 @@ body {
 			box-shadow: $shadow;
 			padding: 2em;
 
+			cursor: pointer;
+			transition: all 0.2s ease-in-out;
+			&:hover {
+				background: darken($color: rgb(240, 239, 239), $amount: 10);
+			}
+
 			.ticket-columns__box__id {
 				display: block;
 				color: $accent;
@@ -217,7 +223,7 @@ body {
 		cursor: pointer;
 		transition: all 0.2s ease-in-out;
 		&:hover {
-			background: darken($color: rgb(183, 183, 183), $amount: 10);
+			background: darken($color: rgb(240, 239, 239), $amount: 10);
 		}
 	}
 }
