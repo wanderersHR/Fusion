@@ -19,12 +19,16 @@ import { useFirebaseStore } from "../stores/firebase";
 import { JiraProject } from "../JiraResponses/JiraProject";
 import Loader from "../components/Loader.vue";
 import Project from "../components/Project.vue";
+import { useAuthenticationStore } from "../stores/authentication";
 
 export default defineComponent({
 	setup() {
 		const projects = ref<JiraProject[]>([]);
+		const authentication = useAuthenticationStore();
 
 		onMounted(() => {
+			console.log(authentication.user?.name);
+
 			const firebaseStore = useFirebaseStore();
 			firebaseStore.loadFirebase();
 			const functions = firebaseStore.functions;
