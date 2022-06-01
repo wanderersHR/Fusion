@@ -46,26 +46,25 @@ export const useAuthenticationStore = defineStore("authentication", {
 					this.getUserFromApi();
 				});
 		},
+		fetchData() {
+			const token = localStorage.getItem("accessToken");
+
+			if (token != null) {
+				this.accessToken = JSON.parse(token);
+			}
+
+			const user = localStorage.getItem("user");
+
+			if (user != null) {
+				this.user = JSON.parse(user);
+			}
+		},
 		logout() {
 			this.token = undefined;
 			this.accessToken = undefined;
 			this.user = undefined;
 			localStorage.removeItem("accessToken");
 			localStorage.removeItem("user");
-		},
-		fetchAccessToken() {
-			const token = localStorage.getItem("accessToken");
-
-			if (token != null) {
-				this.accessToken = JSON.parse(token);
-			}
-		},
-		fetchUser() {
-			const user = localStorage.getItem("user");
-
-			if (user != null) {
-				this.user = JSON.parse(user);
-			}
 		},
 		refresh() {
 			const refreshData = {

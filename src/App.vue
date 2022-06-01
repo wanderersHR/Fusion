@@ -22,8 +22,7 @@ export default defineComponent({
 		const firebaseStore = useFirebaseStore();
 		const authStore = useAuthenticationStore();
 
-		authStore.fetchAccessToken();
-		authStore.fetchUser();
+		authStore.fetchData();
 
 		firebaseStore.loadFirebase();
 
