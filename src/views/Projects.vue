@@ -45,10 +45,16 @@ export default defineComponent({
 				projects.value = data;
 			});
 		});
+
 		return {
 			projects,
 		};
 	},
 	components: { Loader, Project },
 });
+/*var longest = arr.sort(
+			function (a, b) {
+				return b.length - a.length;
+			}
+		)[0];*/
 </script>

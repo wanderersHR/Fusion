@@ -1,11 +1,6 @@
 /** @format */
 
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import Home from "./views/Home.vue";
-import Callback from "./views/Callback.vue";
-import Login from "./views/Login.vue";
-import Loggedin from "./views/Loggedin.vue";
-import Protected from "./views/Protected.vue";
 import auth from "./middleware/auth";
 import guest from "./middleware/guest";
 
@@ -32,13 +27,7 @@ const routes: RouteRecordRaw[] = [
 		path: "/projects",
 		name: "projects",
 		component: () => import("./views/Projects.vue"),
-        beforeEnter: [auth],
-    },
-    {
-		path: "/Loggedin",
-		name: "Loggedin",
-		component: Loggedin,
-		beforeEnter: [guest],
+		beforeEnter: [auth],
 	},
 	{
 		path: "/projects/:name",
