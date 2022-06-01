@@ -27,8 +27,6 @@ export default defineComponent({
 		const authentication = useAuthenticationStore();
 
 		onMounted(() => {
-			console.log(authentication.user?.name);
-
 			const firebaseStore = useFirebaseStore();
 			firebaseStore.loadFirebase();
 			const functions = firebaseStore.functions;
