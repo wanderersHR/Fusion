@@ -1,8 +1,8 @@
 /** @format */
 
 import { defineStore } from "pinia";
-import { json } from "stream/consumers";
 import loginData from "../data.json";
+import { JiraProfile } from "../JiraResponses/JiraProfile";
 
 interface AccessTokenResponse {
 	access_token: string;
@@ -14,11 +14,16 @@ interface AccessTokenResponse {
 
 export const useAuthenticationStore = defineStore("authentication", {
 	state: () => {
-		return { token: undefined as string | undefined, accessToken: undefined as AccessTokenResponse | undefined };
+		return {
+			token: undefined as string | undefined,
+			accessToken: undefined as AccessTokenResponse | undefined,
+			user: undefined as JiraProfile | undefined,
+		};
 	},
 	actions: {
 		login(token: string) {
 			this.token = token;
+
 			const data = {
 				grant_type: loginData.grant_type,
 				client_id: loginData.client_id,
@@ -26,6 +31,7 @@ export const useAuthenticationStore = defineStore("authentication", {
 				code: this.token,
 				redirect_uri: window.location.origin + "/callback",
 			};
+
 			fetch("https://auth.atlassian.com/oauth/token", {
 				method: "POST",
 				headers: {
@@ -37,19 +43,28 @@ export const useAuthenticationStore = defineStore("authentication", {
 				.then((data) => {
 					this.accessToken = data as AccessTokenResponse;
 					localStorage.setItem("accessToken", JSON.stringify(data));
+					this.getUserFromApi();
 				});
 		},
-		logout() {
-			this.token = undefined;
-			this.accessToken = undefined;
-			localStorage.removeItem("accessToken");
-		},
-		fetchAccessToken() {
+		fetchData() {
 			const token = localStorage.getItem("accessToken");
 
 			if (token != null) {
 				this.accessToken = JSON.parse(token);
 			}
+
+			const user = localStorage.getItem("user");
+
+			if (user != null) {
+				this.user = JSON.parse(user);
+			}
+		},
+		logout() {
+			this.token = undefined;
+			this.accessToken = undefined;
+			this.user = undefined;
+			localStorage.removeItem("accessToken");
+			localStorage.removeItem("user");
 		},
 		refresh() {
 			const refreshData = {
@@ -70,9 +85,10 @@ export const useAuthenticationStore = defineStore("authentication", {
 				.then((data) => {
 					this.accessToken = data as AccessTokenResponse;
 					localStorage.setItem("accessToken", JSON.stringify(data));
+					this.getUserFromApi();
 				});
 		},
-		fetchdata() {
+		getUserFromApi() {
 			if (this.isAuthenticated) {
 				fetch("https://api.atlassian.com/me", {
 					headers: {
@@ -81,7 +97,10 @@ export const useAuthenticationStore = defineStore("authentication", {
 					},
 				})
 					.then((res) => res.json())
-					.then((data) => localStorage.setItem("fetchData", JSON.stringify(data)));
+					.then((data) => {
+						localStorage.setItem("user", JSON.stringify(data));
+						this.user = data as JiraProfile;
+					});
 			}
 		},
 	},
@@ -89,5 +108,6 @@ export const useAuthenticationStore = defineStore("authentication", {
 		isAuthenticated: (state) => state.accessToken?.access_token != undefined,
 		getBearerToken: (state) => state.accessToken?.access_token,
 		getRefreshToken: (state) => state.accessToken?.refresh_token,
+		getUser: (state) => state.user,
 	},
 });
