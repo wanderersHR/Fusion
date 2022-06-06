@@ -1,10 +1,21 @@
 /** @format */
 
 import * as functions from "firebase-functions";
-import * as cors from "cors";
+
+import app from "./firebase";
+import { getFirestore, collection, addDoc, getDocs, connectFirestoreEmulator } from "firebase/firestore";
+
+const db = getFirestore(app);
+if (process.env.EMULATOR == "true") {
+	connectFirestoreEmulator(db, "localhost", 8080);
+}
+
 import axios from "axios";
-import { Hour, HourResponse } from "./models";
+
+import * as cors from "cors";
 const corsHandler = cors({ origin: true });
+
+import { Hour, HourResponse } from "./models";
 
 const JiraDomain = "https://hr-blis.atlassian.net/rest/api/3";
 const JiraApiToken = process.env.JIRA_TOKEN;
@@ -20,31 +31,90 @@ export const helloWorld = functions.https.onRequest((request, response) => {
 	});
 });
 
-export const allHours = functions.https.onRequest((request, response) => {
+export const test = functions.https.onRequest((request, response) => {
 	corsHandler(request, response, () => {
-		axios
-			.get<Hour>("https://blishr.simplicate.nl/api/v2/hours/hours", {
-				headers: {
-					"Content-Type": "application/json",
-					"Authentication-Key": "wEp4wAwqFXyAcPmasCsP4WBH21o0gXSZ",
-					"Authentication-Secret": "dBQHfEHMLDlUUESGlvAhq63BOR9hPIrl",
-				},
-			})
-			.then((res) => {
-				const hoursArray: HourResponse[] = res.data.data;
-				const hourObjects = hoursArray.map((hour) => ({
-					totalPrice: hour.tariff * hour.hours,
-					pricePerHour: hour.tariff,
-					id: hour.id,
-					note: hour.note,
-					hours: hour.hours,
-				}));
-
-				return response.json({ data: hourObjects });
+		const colTest = collection(db, "test");
+		getDocs(colTest)
+			.then((docs) => {
+				response.json({ data: docs });
 			})
 			.catch((err) => {
-				return response.json({ data: err });
+				response.json({ data: err });
 			});
+	});
+});
+
+export const allHours = functions.https.onRequest((request, response) => {
+	corsHandler(request, response, async () => {
+		function GetHoursFromJira() {
+			functions.logger.info("Getting hours from Jira");
+
+			return axios
+				.get<Hour>("https://blishr.simplicate.nl/api/v2/hours/hours", {
+					headers: {
+						"Content-Type": "application/json",
+						"Authentication-Key": "wEp4wAwqFXyAcPmasCsP4WBH21o0gXSZ",
+						"Authentication-Secret": "dBQHfEHMLDlUUESGlvAhq63BOR9hPIrl",
+					},
+				})
+				.then(async (res) => {
+					const hoursArray: HourResponse[] = res.data.data;
+					const hourObjects = hoursArray.map((hour) => ({
+						totalPrice: hour.tariff * hour.hours,
+						pricePerHour: hour.tariff,
+						id: hour.id,
+						note: hour.note,
+						hours: hour.hours,
+					}));
+
+					const hoursCollection = collection(db, "hours");
+
+					// Write hourObjects to Firestore
+					await addDoc(hoursCollection, {
+						hourObjects,
+						time: new Date(),
+					});
+					functions.logger.info("Successfully wrote hours to Firestore");
+
+					return hourObjects;
+				})
+				.catch(async (err) => {
+					return err;
+				});
+		}
+
+		functions.logger.info("Getting hours from Jira or Cache");
+
+		//Get the hours from Firestore if it exists
+		const hours = await getDocs(collection(db, "hours"));
+
+		if (hours.size > 0) {
+			functions.logger.info("Hours already in Firestore");
+
+			// Check if the hours are older than 1 hour
+			const now = new Date();
+			const lastHour = hours.docs[hours.docs.length - 1].data() as { hourObjects: Hour[]; date: Date };
+			const lastHourDate = new Date(lastHour.date);
+			const diff = now.getTime() - lastHourDate.getTime();
+			const diffHours = diff / (1000 * 3600);
+
+			if (diffHours > 1) {
+				functions.logger.info("Getting hours from Jira, too old");
+
+				// If the hours are older than 1 hour, get the hours from Jira
+				const newHours = await GetHoursFromJira();
+				return response.json({ data: newHours });
+			} else {
+				functions.logger.info("Hours are less than 1 hour old");
+				return response.json({ data: hours.docs[0].data().hourObjects });
+			}
+		} else {
+			functions.logger.info("Getting hours from Jira, not in cache");
+
+			// If the hours don't exist, get them from Jira
+			const newHours = await GetHoursFromJira();
+			return response.json({ data: newHours });
+		}
 	});
 });
 
