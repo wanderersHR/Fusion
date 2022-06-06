@@ -2,7 +2,8 @@
 
 <template>
 	<button @click="logout" class="logout-btn">
-		<i class="fa-solid fa-arrow-right-from-bracket"></i><span>Logout</span>
+		<font-awesome-icon icon="arrow-right-from-bracket" />
+		<span>Logout</span>
 	</button>
 </template>
 

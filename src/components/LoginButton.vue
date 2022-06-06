@@ -2,7 +2,7 @@
 
 <template>
 	<a :href="loginUrl" class="login-btn">
-		<i class="fa-brands fa-jira"></i>
+		<font-awesome-icon :icon="['fab', 'jira']" />
 		<span>Login with Jira</span>
 	</a>
 </template>
