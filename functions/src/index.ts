@@ -3,7 +3,7 @@
 import * as functions from "firebase-functions";
 
 import app from "./firebase";
-import { getFirestore, collection, addDoc, getDocs, connectFirestoreEmulator } from "firebase/firestore";
+import { getFirestore, collection, getDocs, connectFirestoreEmulator, doc, setDoc } from "firebase/firestore";
 
 const db = getFirestore(app);
 if (process.env.EMULATOR == "true") {
@@ -46,6 +46,8 @@ export const test = functions.https.onRequest((request, response) => {
 
 export const allHours = functions.https.onRequest((request, response) => {
 	corsHandler(request, response, async () => {
+		const hoursCollection = collection(db, "hours");
+
 		function GetHoursFromJira() {
 			functions.logger.info("Getting hours from Jira");
 
@@ -67,13 +69,12 @@ export const allHours = functions.https.onRequest((request, response) => {
 						hours: hour.hours,
 					}));
 
-					const hoursCollection = collection(db, "hours");
-
 					// Write hourObjects to Firestore
-					await addDoc(hoursCollection, {
-						hourObjects,
+					await setDoc(doc(db, "hours", "lastUpdate"), {
 						time: new Date(),
+						hourObjects,
 					});
+
 					functions.logger.info("Successfully wrote hours to Firestore");
 
 					return hourObjects;
@@ -86,7 +87,7 @@ export const allHours = functions.https.onRequest((request, response) => {
 		functions.logger.info("Getting hours from Jira or Cache");
 
 		//Get the hours from Firestore if it exists
-		const hours = await getDocs(collection(db, "hours"));
+		const hours = await getDocs(hoursCollection);
 
 		if (hours.size > 0) {
 			functions.logger.info("Hours already in Firestore");
