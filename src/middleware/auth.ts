@@ -3,10 +3,14 @@
 import { useAuthenticationStore } from "../stores/authentication";
 import { RouteLocationNormalized, NavigationGuardNext } from "vue-router";
 
-export default function auth(to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) {
+export default async function auth(
+	to: RouteLocationNormalized,
+	from: RouteLocationNormalized,
+	next: NavigationGuardNext
+) {
 	const authenticationStore = useAuthenticationStore();
 
-	if (authenticationStore.isAuthenticated) {
+	if (await authenticationStore.isAuthenticated()) {
 		return next();
 	}
 
