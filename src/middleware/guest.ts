@@ -3,10 +3,14 @@
 import { useAuthenticationStore } from "../stores/authentication";
 import { RouteLocationNormalized, NavigationGuardNext } from "vue-router";
 
-export default function guest(to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) {
+export default async function guest(
+	to: RouteLocationNormalized,
+	from: RouteLocationNormalized,
+	next: NavigationGuardNext
+) {
 	const authenticationStore = useAuthenticationStore();
 
-	if (authenticationStore.isAuthenticated) {
+	if (await authenticationStore.isAuthenticated()) {
 		return next({ name: "home" });
 	}
 

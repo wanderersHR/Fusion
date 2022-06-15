@@ -88,8 +88,8 @@ export const useAuthenticationStore = defineStore("authentication", {
 					this.getUserFromApi();
 				});
 		},
-		getUserFromApi() {
-			if (this.isAuthenticated) {
+		async getUserFromApi() {
+			if (await this.isAuthenticated()) {
 				fetch("https://api.atlassian.com/me", {
 					headers: {
 						Authorization: "Bearer " + this.getBearerToken,
@@ -103,9 +103,26 @@ export const useAuthenticationStore = defineStore("authentication", {
 					});
 			}
 		},
+		async isAuthenticated(): Promise<boolean> {
+			if (this.accessToken === undefined) {
+				return false;
+			}
+
+			const response = await fetch("https://api.atlassian.com/oauth/token/accessible-resources", {
+				headers: {
+					Authorization: "Bearer " + this.getBearerToken,
+				},
+			});
+
+			if (!response.ok) {
+				this.logout();
+				return false;
+			}
+
+			return true;
+		},
 	},
 	getters: {
-		isAuthenticated: (state) => state.accessToken?.access_token != undefined,
 		getBearerToken: (state) => state.accessToken?.access_token,
 		getRefreshToken: (state) => state.accessToken?.refresh_token,
 		getUser: (state) => state.user,
