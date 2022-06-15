@@ -3,7 +3,7 @@
 <template>
 	<a :href="loginUrl" class="login-btn">
 		<font-awesome-icon :icon="['fab', 'jira']" />
-		<span>Login with Jira</span>
+		<span> Login with Jira</span>
 	</a>
 </template>
 

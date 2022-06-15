@@ -2,12 +2,14 @@
 <template>
 	<div class="main-nav">
 		<div>
-			<img src="/logo.svg" alt="Fusion" class="main-nav__logo" />
+			<router-link to="/projects">
+				<img src="/logo.svg" alt="Fusion" class="main-nav__logo" />
+			</router-link>
 		</div>
 	</div>
 	<div class="login-container">
 		<h1>Logout</h1>
-		<p>You can log out here or go back to the open Projects.</p>
+		<p>You can log out here or go back to the open <router-link to="/Projects"> Projects. </router-link></p>
 		<LoginButton v-if="!isAuthenticated" />
 		<LogoutButton v-else />
 	</div>

@@ -6,6 +6,8 @@
 $text: #0d2d57;
 $accent: #0042a3;
 $highlight: #006eff;
+$background: #ffff;
+$highlight_2: #f0eeee81;
 $shadow: 30px 30px 30px
 	rgba(
 		$color: $highlight,
@@ -36,19 +38,12 @@ body {
 	}
 }
 
-.size {
-	@include sm;
-	@include md;
-	@include lg;
-	@include xl;
-}
-
 .main-nav {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	position: sticky;
-	background-color: white;
+	background-color: $background;
 	top: 0;
 
 	.main-nav__logo {
@@ -65,6 +60,7 @@ body {
 .main-box {
 	display: flex;
 	box-sizing: border-box;
+	flex-direction: row;
 
 	.ticket-columns {
 		flex-direction: column;
@@ -82,7 +78,7 @@ body {
 			cursor: pointer;
 			transition: all 0.2s ease-in-out;
 			&:hover {
-				background: darken($color: rgba(240, 239, 239, 0.546), $amount: 10);
+				background: darken($color: $highlight_2, $amount: 10);
 			}
 
 			.ticket-columns__box__id {
@@ -105,7 +101,7 @@ body {
 			.ticket-columns__box__details {
 				display: block;
 				padding-top: 0.5em;
-				color: #006eff;
+				color: $highlight;
 				text-align: right;
 				font-size: 0.8em;
 			}
@@ -115,23 +111,26 @@ body {
 	.side-columns {
 		flex-direction: column;
 		width: 30%;
+		padding: 3px;
 
 		.side-columns__box {
-			width: 95%;
-			height: 60%;
+			width: 90%;
+			height: fit-content;
 
 			border-radius: 5px;
 			box-shadow: $shadow;
 			padding: 3em;
+			margin-left: auto;
 
+			cursor: pointer;
+			transition: all 0.2s ease-in-out;
+			&:hover {
+				background: darken($color: $highlight_2, $amount: 10);
+			}
 			h1 {
 				color: $highlight;
+				font-size: xxx-large;
 			}
-		}
-
-		.side-columns__box--empty {
-			width: 100%;
-			height: 40%;
 		}
 	}
 }
@@ -165,7 +164,7 @@ body {
 		cursor: pointer;
 		transition: all 0.2s ease-in-out;
 
-		color: white;
+		color: $background;
 		text-decoration: none;
 
 		/* Font Awesome Icon */
@@ -186,7 +185,7 @@ body {
 	padding: 1em;
 	cursor: pointer;
 	transition: all 0.2s ease-in-out;
-	color: white;
+	color: $background;
 	text-decoration: none;
 	/* Font Awesome Icon */
 	i {

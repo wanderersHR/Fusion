@@ -3,15 +3,16 @@
 <template>
 	<div class="main-nav">
 		<div>
-			<img src="/logo.svg" alt="Fusion" class="main-nav__logo" />
+			<router-link to="/projects">
+				<img src="/logo.svg" alt="Fusion" class="main-nav__logo" />
+			</router-link>
 		</div>
 		<div>
-			<h2 class="main-nav__name">Welcome User</h2>
-		</div>
-		<div>
-			<button @click="logout" class="logout-btn">
-				<i class="fa-solid fa-arrow-right-from-bracket"></i><span>Logout</span>
-			</button>
+			<!--<font-awesome-icon icon="circle-user" size="xl" />
+			-->
+			<router-link to="/home">
+				<font-awesome-icon icon="arrow-right-from-bracket" size="xl" />
+			</router-link>
 		</div>
 	</div>
 </template>

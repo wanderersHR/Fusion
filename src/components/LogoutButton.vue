@@ -3,7 +3,7 @@
 <template>
 	<button @click="logout" class="logout-btn">
 		<font-awesome-icon icon="arrow-right-from-bracket" />
-		<span>Logout</span>
+		<span> Logout</span>
 	</button>
 </template>
 

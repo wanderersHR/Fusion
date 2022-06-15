@@ -2,7 +2,7 @@
 
 <template>
 	<Navigation />
-	<h1 style="text-align: center">Projects</h1>
+	<h1 style="text-align: center">Select a Project to examine:</h1>
 
 	<div v-if="projects.length > 0" class="projects">
 		<Project v-for="project in projects" v-bind:key="project.id" v-bind:project="project" />
