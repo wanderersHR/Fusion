@@ -8,8 +8,10 @@
 			</router-link>
 		</div>
 		<div>
+			<Dropdown />
 			<!--<font-awesome-icon icon="circle-user" size="xl" />
 			-->
+
 			<router-link to="/home">
 				<font-awesome-icon icon="arrow-right-from-bracket" size="xl" />
 			</router-link>
@@ -20,8 +22,12 @@
 import { defineComponent } from "vue";
 import { useAuthenticationStore } from "../stores/authentication";
 import { useRouter } from "vue-router";
+import Dropdown from "../components/Dropdown.vue";
 
 export default defineComponent({
+	components: {
+		Dropdown,
+	},
 	setup() {
 		const authenticationStore = useAuthenticationStore();
 		const router = useRouter();
