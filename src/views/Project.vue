@@ -29,7 +29,6 @@ export default defineComponent({
 		const route = useRoute();
 		const projectName = route.params.name;
 		const issues = ref<Issue[]>([]);
-		console.log(authorId);
 
 		const filteredIssues = computed(() => {
 			return issues.value.filter((issue) => issue.fields.creator.accountId === authorId);
@@ -47,7 +46,6 @@ export default defineComponent({
 					data: JiraProjectDetails;
 				};
 				issues.value = data.issues;
-				console.log(data.issues);
 			});
 		});
 
