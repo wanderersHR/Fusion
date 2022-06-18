@@ -1,13 +1,14 @@
 <!-- @format -->
 
 <template>
-	<h1>Projects</h1>
+	<Navigation />
+	<h1 style="text-align: center">Select a Project to examine:</h1>
 
 	<div v-if="projects.length > 0" class="projects">
 		<Project v-for="project in projects" v-bind:key="project.id" v-bind:project="project" />
 	</div>
 
-	<div v-else>
+	<div v-else class="loader">
 		<Loader />
 	</div>
 </template>
@@ -18,6 +19,7 @@ import { defineComponent, onMounted, ref } from "vue";
 import { useFirebaseStore } from "../stores/firebase";
 import { JiraProject } from "../JiraResponses/JiraProject";
 import Loader from "../components/Loader.vue";
+import Navigation from "../components/Navigation.vue";
 import Project from "../components/Project.vue";
 import { useAuthenticationStore } from "../stores/authentication";
 
@@ -39,10 +41,16 @@ export default defineComponent({
 				projects.value = data;
 			});
 		});
+
 		return {
 			projects,
 		};
 	},
-	components: { Loader, Project },
+	components: { Loader, Project, Navigation },
 });
+/*var longest = arr.sort(
+			function (a, b) {
+				return b.length - a.length;
+			}
+		)[0];*/
 </script>

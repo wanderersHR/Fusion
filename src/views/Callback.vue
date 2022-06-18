@@ -23,7 +23,7 @@ export default defineComponent({
 
 		onMounted(() => {
 			authenticationStore.login(route.query.code as string);
-			setTimeout(() => router.push({ name: "home" }), 1000);
+			setTimeout(() => router.push({ name: "projects" }), 1000);
 			// router.push({ name: "home" });
 		});
 	},

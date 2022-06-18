@@ -10,6 +10,10 @@
 		"start": "npm i && npm run build && npm run cloud && firebase emulators:start"
 	},
 	"dependencies": {
+		"@fortawesome/fontawesome-svg-core": "^6.1.1",
+		"@fortawesome/free-brands-svg-icons": "^6.1.1",
+		"@fortawesome/free-solid-svg-icons": "^6.1.1",
+		"@fortawesome/vue-fontawesome": "^3.0.0-5",
 		"firebase": "^9.6.10",
 		"moment": "^2.29.3",
 		"pinia": "^2.0.12",
@@ -19,6 +23,10 @@
 	},
 	"devDependencies": {
 		"@vitejs/plugin-vue": "^2.2.0",
+		"autoprefixer": "^10.4.4",
+		"node-sass": "^7.0.1",
+		"postcss": "^8.4.12",
+		"sass-loader": "^12.6.0",
 		"typescript": "^4.5.4",
 		"vite": "^2.8.0",
 		"vue-tsc": "^0.29.8"
