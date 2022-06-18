@@ -1,12 +1,30 @@
 <!-- @format -->
 <template>
-	<h1>Project {{ projectName }}</h1>
+	<Navigation />
+	<h1 style="text-align: center">Tickets for Project {{ projectName }}</h1>
 
-	<div v-if="issues.length > 0" class="issues">
-		<IssueComponent v-for="issue in issues" v-bind:key="issue.id" v-bind:issue="issue" />
+	<div v-if="issues.length > 0">
+		<div class="main-box">
+			<div class="ticket-columns">
+				<IssueComponent v-for="issue in issues" v-bind:key="issue.id" v-bind:issue="issue" />
+			</div>
+			<div class="side-columns">
+				<div class="side-columns__box">
+					<h2>Tickets:</h2>
+					<h1>5</h1>
+					<br />
+					<h2>Uren:</h2>
+					<h1>76 uur</h1>
+					<br />
+					<h2>Kosten:</h2>
+					<h1>€7600</h1>
+				</div>
+				<div class="side-columns__box--empty"></div>
+			</div>
+		</div>
 	</div>
 
-	<div v-else>
+	<div v-else class="loader">
 		<Loader />
 	</div>
 </template>
@@ -15,6 +33,7 @@
 import { httpsCallable } from "firebase/functions";
 import { defineComponent, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
+import Navigation from "../components/Navigation.vue";
 import { useFirebaseStore } from "../stores/firebase";
 import { Issue, JiraProjectDetails } from "../JiraResponses/JiraProjectDetail";
 
@@ -44,6 +63,6 @@ export default defineComponent({
 
 		return { projectName, issues };
 	},
-	components: { Loader, IssueComponent },
+	components: { Loader, IssueComponent, Navigation },
 });
 </script>
