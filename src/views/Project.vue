@@ -2,11 +2,10 @@
 <template>
 	<Navigation />
 	<h1 style="text-align: center">Tickets for Project {{ projectName }}</h1>
-
 	<div v-if="issues.length > 0">
 		<div class="main-box">
 			<div class="ticket-columns">
-				<IssueComponent v-for="issue in issues" v-bind:key="issue.id" v-bind:issue="issue" />
+				<IssueComponent v-for="issue in filteredIssues" v-bind:key="issue.id" v-bind:issue="issue" />
 			</div>
 			<div class="side-columns">
 				<div class="side-columns__box">
@@ -31,7 +30,7 @@
 
 <script lang="ts">
 import { httpsCallable } from "firebase/functions";
-import { defineComponent, onMounted, ref } from "vue";
+import { computed, defineComponent, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import Navigation from "../components/Navigation.vue";
 import { useFirebaseStore } from "../stores/firebase";
@@ -39,12 +38,19 @@ import { Issue, JiraProjectDetails } from "../JiraResponses/JiraProjectDetail";
 
 import Loader from "../components/Loader.vue";
 import IssueComponent from "../components/Issue.vue";
+import { useAuthenticationStore } from "../stores/authentication";
 
 export default defineComponent({
 	setup() {
+		const authStore = useAuthenticationStore();
+		const authorId = authStore.getUser?.account_id;
 		const route = useRoute();
 		const projectName = route.params.name;
 		const issues = ref<Issue[]>([]);
+
+		const filteredIssues = computed(() => {
+			return issues.value.filter((issue) => issue.fields.creator.accountId === authorId);
+		});
 
 		onMounted(() => {
 			const firebaseStore = useFirebaseStore();
@@ -61,7 +67,7 @@ export default defineComponent({
 			});
 		});
 
-		return { projectName, issues };
+		return { projectName, filteredIssues };
 	},
 	components: { Loader, IssueComponent, Navigation },
 });
