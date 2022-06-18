@@ -91,6 +91,14 @@ export interface HourResponse {
 	source: string;
 }
 
+export interface HoursObject {
+	totalPrice: number;
+	pricePerHour: number;
+	id: string;
+	note: string;
+	hours: number;
+}
+
 export interface Hour {
 	data: HourResponse[];
 }

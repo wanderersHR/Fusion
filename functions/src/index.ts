@@ -3,12 +3,19 @@
 import * as functions from "firebase-functions";
 import * as cors from "cors";
 import axios from "axios";
-import { Hour, HourResponse } from "./models";
+import { Hour, HourResponse, HoursObject } from "./models";
 const corsHandler = cors({ origin: true });
 
 const JiraDomain = "https://hr-blis.atlassian.net/rest/api/3";
 const JiraApiToken = process.env.JIRA_TOKEN;
 const JiraApiTokenHeader = "Basic " + Buffer.from(JiraApiToken || "").toString("base64");
+
+let CachedHours:
+	| {
+			hours: HoursObject[];
+			lastUpdated: number;
+	  }
+	| undefined;
 
 // Start writing Firebase Functions
 // https://firebase.google.com/docs/functions/typescript
@@ -20,36 +27,8 @@ export const helloWorld = functions.https.onRequest((request, response) => {
 	});
 });
 
-export const allHours = functions.https.onRequest((request, response) => {
-	corsHandler(request, response, () => {
-		axios
-			.get<Hour>("https://blishr.simplicate.nl/api/v2/hours/hours", {
-				headers: {
-					"Content-Type": "application/json",
-					"Authentication-Key": "wEp4wAwqFXyAcPmasCsP4WBH21o0gXSZ",
-					"Authentication-Secret": "dBQHfEHMLDlUUESGlvAhq63BOR9hPIrl",
-				},
-			})
-			.then((res) => {
-				const hoursArray: HourResponse[] = res.data.data;
-				const hourObjects = hoursArray.map((hour) => ({
-					totalPrice: hour.tariff * hour.hours,
-					pricePerHour: hour.tariff,
-					id: hour.id,
-					note: hour.note,
-					hours: hour.hours,
-				}));
-
-				return response.json({ data: hourObjects });
-			})
-			.catch((err) => {
-				return response.json({ data: err });
-			});
-	});
-});
-
-export const getHoursByTicket = functions.https.onCall((request, response) => {
-	return axios
+async function simplicateGetAllHours() {
+	return await axios
 		.get<Hour>("https://blishr.simplicate.nl/api/v2/hours/hours", {
 			headers: {
 				"Content-Type": "application/json",
@@ -59,10 +38,7 @@ export const getHoursByTicket = functions.https.onCall((request, response) => {
 		})
 		.then((res) => {
 			const hoursArray: HourResponse[] = res.data.data;
-			const filteredHoursArray: HourResponse[] = hoursArray.filter((hour) =>
-				hour.note.toLowerCase().includes(request.ticket)
-			);
-			const hourObjects = filteredHoursArray.map((hour) => ({
+			const hourObjects: HoursObject[] = hoursArray.map((hour) => ({
 				totalPrice: hour.tariff * hour.hours,
 				pricePerHour: hour.tariff,
 				id: hour.id,
@@ -70,12 +46,40 @@ export const getHoursByTicket = functions.https.onCall((request, response) => {
 				hours: hour.hours,
 			}));
 
-			if (hourObjects.length !== 0) {
-				return { data: hourObjects };
-			}
+			CachedHours = {
+				hours: hourObjects,
+				lastUpdated: Date.now(),
+			};
 
-			return { data: "Hours with that ticket not found" };
+			return hourObjects;
+		})
+		.catch((err) => {
+			return err;
 		});
+}
+simplicateGetAllHours();
+
+async function simplicateGetHoursByTicket(ticketId: string) {
+	if (!CachedHours || CachedHours.lastUpdated > Date.now() - 1000 * 60 * 60) {
+		await simplicateGetAllHours();
+	}
+
+	const hours = CachedHours?.hours.filter((hour) => hour.note.includes(ticketId));
+	return hours;
+}
+
+export const allHours = functions.https.onRequest((request, response) => {
+	corsHandler(request, response, () => {
+		simplicateGetAllHours().then((res) => {
+			response.json(res);
+		});
+	});
+});
+
+export const getHoursByTicket = functions.https.onCall((request, response) => {
+	return simplicateGetHoursByTicket(request.ticket).then((res) => {
+		return res;
+	});
 });
 
 export const getProjects = functions.https.onCall((request, response) => {
@@ -106,8 +110,8 @@ export const getProject = functions.https.onCall((request, response) => {
 		return { error: "Project name is required" };
 	}
 
-	const name = request.projectName || request.name;
-	const jqlUrl = `${JiraDomain}/search?jql=project="${name}"&maxResults=2147483647`;
+	const id = request.id || request.key;
+	const jqlUrl = `${JiraDomain}/project/${id}?expand=permissions`;
 
 	return axios
 		.get(jqlUrl, {
