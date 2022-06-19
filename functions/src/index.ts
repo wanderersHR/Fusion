@@ -3,7 +3,7 @@
 import * as functions from "firebase-functions";
 import * as cors from "cors";
 import axios from "axios";
-import { Hour, HourResponse, HoursObject } from "./models";
+import { Hour, HourResponse, HoursObject, JiraProjectDetails } from "./models";
 const corsHandler = cors({ origin: true });
 
 const JiraDomain = "https://hr-blis.atlassian.net/rest/api/3";
@@ -59,11 +59,12 @@ async function simplicateGetAllHours() {
 }
 simplicateGetAllHours();
 
-async function simplicateGetHoursByTicket(ticketId: string) {
-	if (!CachedHours || CachedHours.lastUpdated > Date.now() - 1000 * 60 * 60) {
-		await simplicateGetAllHours();
-	}
+// Ugly way to keep the cache up to date, but it works for now
+setInterval(async () => {
+	await simplicateGetAllHours();
+}, 1000 * 60 * 60);
 
+function simplicateGetHoursByTicket(ticketId: string) {
 	const hours = CachedHours?.hours.filter((hour) => hour.note.includes(ticketId));
 	return hours;
 }
@@ -77,9 +78,7 @@ export const allHours = functions.https.onRequest((request, response) => {
 });
 
 export const getHoursByTicket = functions.https.onCall((request, response) => {
-	return simplicateGetHoursByTicket(request.ticket).then((res) => {
-		return res;
-	});
+	return simplicateGetHoursByTicket(request.ticket);
 });
 
 export const getProjects = functions.https.onCall((request, response) => {
@@ -110,8 +109,8 @@ export const getProject = functions.https.onCall((request, response) => {
 		return { error: "Project name is required" };
 	}
 
-	const id = request.id || request.key;
-	const jqlUrl = `${JiraDomain}/project/${id}?expand=permissions`;
+	const name = request.projectName || request.name;
+	const jqlUrl = `${JiraDomain}/search?jql=project="${name}"&maxResults=2147483647`;
 
 	return axios
 		.get(jqlUrl, {
@@ -121,8 +120,27 @@ export const getProject = functions.https.onCall((request, response) => {
 				Accept: "application/json",
 			},
 		})
-		.then((res) => {
-			return res.data;
+		.then(async (res) => {
+			const { data } = res as {
+				data: JiraProjectDetails;
+			};
+
+			// Loop over all issues and add the hours to them.
+			// The simplicateGetHoursByTicket is async, so we need to wait for it to finish before returning the data.
+			data.issues.map((issue) => {
+				// I'm not sure which one is correct, but one works and that's all I need for now.
+				const way1 = simplicateGetHoursByTicket(issue.key);
+				const way2 = simplicateGetHoursByTicket(issue.id);
+				const way3 = simplicateGetHoursByTicket(issue.fields.summary);
+
+				// Let Javascript figure out which one is correct.
+				const hours = way1 || way2 || way3;
+				issue.hours = hours;
+
+				return issue;
+			});
+
+			return data;
 		})
 		.catch((err) => {
 			console.log(err);

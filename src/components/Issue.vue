@@ -6,18 +6,30 @@
 
 		<span class="ticket-columns__box__label">{{ issue.fields.summary }}</span>
 
-		<span class="ticket-columns__box__description">
-			{{
-				// TODO: Find a better way to do this
-				issue.fields.description?.content[0].content[0].text
-			}}
-		</span>
+		<div class="ticket-row">
+			<div class="ticket-columns-info">
+				<span class="ticket-columns__box__description">
+					{{
+						// TODO: Find a better way to do this
+						issue.fields.description?.content[0].content[0].text
+					}}
+				</span>
 
-		<span class="ticket-columns__box__details">
-			{{ issue.fields.status.name }} - {{ issue.fields.priority.name }} -
-			{{ issue.fields.assignee?.displayName }} - {{ formatTime(issue.fields.created) }} -
-			{{ formatTimeFromNow(issue.fields.updated) }}
-		</span>
+				<span class="ticket-columns__box__details">
+					{{ issue.fields.status.name }} - {{ issue.fields.priority.name }} -
+					{{ issue.fields.assignee?.displayName }} - {{ formatTime(issue.fields.created) }} -
+					{{ formatTimeFromNow(issue.fields.updated) }}
+				</span>
+			</div>
+			<div class="ticket-columns-hours" v-if="issue.hours && issue.hours[0]">
+				<span class="ticket-columns__box__hours"
+					>{{ issue.hours[0].hours ? issue.hours[0].hours : "?" }} uur</span
+				>
+				<span class="ticket-columns__box__price"
+					>€{{ issue.hours[0].totalPrice ? issue.hours[0].totalPrice : "?" }}</span
+				>
+			</div>
+		</div>
 	</div>
 </template>
 
