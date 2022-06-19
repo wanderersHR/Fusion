@@ -12,7 +12,7 @@
 			<!--<font-awesome-icon icon="circle-user" size="xl" />
 			-->
 
-			<router-link to="/home">
+			<router-link to="/">
 				<font-awesome-icon icon="arrow-right-from-bracket" size="xl" />
 			</router-link>
 		</div>
