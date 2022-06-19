@@ -1,9 +1,17 @@
 <!-- @format -->
 
 <template>
+	<div class="main-nav">
+		<div>
+			<img src="/logo.svg" alt="Fusion" class="main-nav__logo" />
+		</div>
+	</div>
 	<div>
-		<h1>Je moet inloggen op uw atlassian account</h1>
-		<LoginButton />
+		<div class="login-container">
+			<h1>Login</h1>
+			<p>Log in here with your Jira account. You'll be send back to our webpage instantly!</p>
+			<LoginButton />
+		</div>
 	</div>
 </template>
 

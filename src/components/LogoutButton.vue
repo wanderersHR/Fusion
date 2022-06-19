@@ -1,7 +1,10 @@
 <!-- @format -->
 
 <template>
-	<button @click="logout">Logout</button>
+	<button @click="logout" class="logout-btn">
+		<font-awesome-icon icon="arrow-right-from-bracket" />
+		<span> Logout</span>
+	</button>
 </template>
 
 <script lang="ts">

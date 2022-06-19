@@ -1,21 +1,23 @@
 <!-- @format -->
 
 <template>
-	<div class="issue" v-bind:key="issue.id">
-		<h2>{{ issue.key }} - {{ issue.fields.summary }}</h2>
+	<div class="ticket-columns__box" v-bind:key="issue.id">
+		<span class="ticket-columns__box__id">Ticket #{{ issue.id }}</span>
 
-		<h3>
+		<span class="ticket-columns__box__label">{{ issue.fields.summary }}</span>
+
+		<span class="ticket-columns__box__description">
 			{{
 				// TODO: Find a better way to do this
 				issue.fields.description?.content[0].content[0].text
 			}}
-		</h3>
+		</span>
 
-		<h5>
+		<span class="ticket-columns__box__details">
 			{{ issue.fields.status.name }} - {{ issue.fields.priority.name }} -
 			{{ issue.fields.assignee?.displayName }} - {{ formatTime(issue.fields.created) }} -
 			{{ formatTimeFromNow(issue.fields.updated) }}
-		</h5>
+		</span>
 	</div>
 </template>
 
