@@ -14,11 +14,13 @@
 		"@fortawesome/free-brands-svg-icons": "^6.1.1",
 		"@fortawesome/free-solid-svg-icons": "^6.1.1",
 		"@fortawesome/vue-fontawesome": "^3.0.0-5",
+		"@vuepic/vue-datepicker": "^3.2.2",
 		"firebase": "^9.6.10",
 		"moment": "^2.29.3",
 		"pinia": "^2.0.12",
 		"sass": "^1.49.9",
 		"vue": "^3.2.25",
+		"vue-month-picker": "^1.6.0",
 		"vue-router": "^4.0.14"
 	},
 	"devDependencies": {
