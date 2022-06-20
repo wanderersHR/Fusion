@@ -2,7 +2,8 @@
 <template>
 	<Navigation />
 	<h1 style="text-align: center">Tickets for Project {{ projectName }}</h1>
-	<Datepicker v-model="picked" monthPicker />
+	<h2 style="text-align: center">Select a month:</h2>
+	<Datepicker v-model="picked" style="width: 100%; padding-left: 30%; padding-right: 30%" monthPicker />
 	<div v-if="filteredIssues.length > 0">
 		<div class="main-box">
 			<div class="ticket-columns">
@@ -19,7 +20,6 @@
 					<h2>Kosten:</h2>
 					<h1>€7600</h1>
 				</div>
-				<div class="side-columns__box--empty"></div>
 			</div>
 		</div>
 	</div>
