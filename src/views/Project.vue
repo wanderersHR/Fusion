@@ -2,7 +2,7 @@
 <template>
 	<Navigation />
 	<h1 style="text-align: center">Tickets for Project {{ projectName }}</h1>
-	<div v-if="issues.length > 0">
+	<div v-if="filteredIssues.length > 0">
 		<div class="main-box">
 			<div class="ticket-columns">
 				<IssueComponent v-for="issue in filteredIssues" v-bind:key="issue.id" v-bind:issue="issue" />
@@ -50,6 +50,7 @@ export default defineComponent({
 
 		const filteredIssues = computed(() => {
 			return issues.value.filter((issue) => issue.fields.creator.accountId === authorId);
+			// return issues.value;
 		});
 
 		onMounted(() => {
