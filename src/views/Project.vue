@@ -49,8 +49,8 @@ export default defineComponent({
 		const issues = ref<Issue[]>([]);
 
 		const filteredIssues = computed(() => {
-			// return issues.value.filter((issue) => issue.fields.creator.accountId === authorId);
-			return issues.value;
+			return issues.value.filter((issue) => issue.fields.creator.accountId === authorId);
+			// return issues.value;
 		});
 
 		onMounted(() => {

@@ -9,25 +9,18 @@
 		<div class="ticket-row">
 			<div class="ticket-columns-info">
 				<span class="ticket-columns__box__description">
-					{{
-						// TODO: Find a better way to do this
-						issue.fields.description?.content[0].content[0].text
-					}}
+					{{ issueName }}
 				</span>
 
 				<span class="ticket-columns__box__details">
 					{{ issue.fields.status.name }} - {{ issue.fields.priority.name }} -
-					{{ issue.fields.assignee?.displayName }} - {{ formatTime(issue.fields.created) }} -
-					{{ formatTimeFromNow(issue.fields.updated) }}
+					{{ issue.fields.assignee?.displayName }} - {{ creationDate }} -
+					{{ dateFromNow }}
 				</span>
 			</div>
-			<div class="ticket-columns-hours" v-if="issue.hours && issue.hours[0]">
-				<span class="ticket-columns__box__hours"
-					>{{ issue.hours[0].hours ? issue.hours[0].hours : "?" }} uur</span
-				>
-				<span class="ticket-columns__box__price"
-					>€{{ issue.hours[0].totalPrice ? issue.hours[0].totalPrice : "?" }}</span
-				>
+			<div class="ticket-columns-hours" v-if="totalHours > 0 || totalPrice > 0">
+				<span class="ticket-columns__box__hours">{{ totalHours }} uur</span>
+				<span class="ticket-columns__box__price">€{{ totalPrice }}</span>
 			</div>
 		</div>
 	</div>
@@ -35,7 +28,7 @@
 
 <script lang="ts">
 import moment from "moment";
-import { defineComponent } from "vue";
+import { computed, defineComponent } from "vue";
 import { Issue } from "../JiraResponses/JiraProjectDetail";
 
 export default defineComponent({
@@ -46,18 +39,47 @@ export default defineComponent({
 		},
 	},
 	setup(props) {
-		function formatTime(time: Date | string) {
-			return moment(time).format("LLL");
-		}
+		const issue = props.issue;
 
-		function formatTimeFromNow(time: Date | string) {
-			return moment(time).fromNow();
-		}
+		const issueName = computed(() => {
+			return props.issue.fields.description?.content[0].content[0].text;
+		});
+
+		const totalHours = computed(() => {
+			let hours = 0;
+			if (props.issue.hours) {
+				props.issue.hours.forEach((hour) => {
+					hours += hour.hours ? hour.hours : 0;
+				});
+			}
+			return hours;
+		});
+
+		const totalPrice = computed(() => {
+			let price = 0;
+			if (issue.hours) {
+				issue.hours.forEach((hour) => {
+					price += hour.totalPrice ? hour.totalPrice : 0;
+				});
+			}
+			return price;
+		});
+
+		const creationDate = computed(() => {
+			return moment(issue.fields.created).format("LLL");
+		});
+
+		const dateFromNow = computed(() => {
+			return moment(issue.fields.updated).fromNow();
+		});
 
 		return {
+			issueName,
 			issue: props.issue,
-			formatTime,
-			formatTimeFromNow,
+			creationDate,
+			dateFromNow,
+			totalHours,
+			totalPrice,
 		};
 	},
 });
