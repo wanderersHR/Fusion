@@ -30,19 +30,21 @@ import { computed, defineComponent, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import Navigation from "../components/Navigation.vue";
 import { useFirebaseStore } from "../stores/firebase";
-import { Issue, JiraProjectDetails } from "../JiraResponses/JiraProjectDetail";
+import { Issue, UserList, JiraProjectDetails } from "../JiraResponses/JiraProjectDetail";
 import Loader from "../components/Loader.vue";
 import IssueComponent from "../components/Issue.vue";
 import { useAuthenticationStore } from "../stores/authentication";
 import Datepicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import moment from "moment";
+import { useSelectedUserStore } from "../stores/selecteduser";
 import TicketOverview from "../components/TicketOverview.vue";
 
 export default defineComponent({
 	setup() {
 		const authStore = useAuthenticationStore();
-		const authorId = authStore.getUser?.account_id;
+		const selectedUser = useSelectedUserStore();
+		const authorId = selectedUser.getAccountId ? selectedUser.getAccountId : authStore.getUser?.account_id;
 		const route = useRoute();
 		const projectName = route.params.name;
 		const issues = ref<Issue[]>([]);
@@ -53,7 +55,7 @@ export default defineComponent({
 		const loaded = ref(false);
 
 		const filteredIssues = computed(() => {
-			let ownTickets = issues.value.filter((issue) => issue.fields.creator.accountId === authorId);
+			let ownTickets = issues.value.filter((issue) => issue.fields.reporter.accountId === authorId);
 			let monthTickets = ownTickets.filter(
 				(issue) =>
 					moment(issue.fields.created).month() === picked.value.month &&
@@ -67,14 +69,23 @@ export default defineComponent({
 			firebaseStore.loadFirebase();
 
 			const functions = firebaseStore.functions;
+			console.log(authorId);
 
 			const projectInfo = httpsCallable(functions, "getProject");
 			projectInfo({ name: projectName }).then((result: any) => {
 				const { data } = result as {
 					data: JiraProjectDetails;
 				};
+				console.log(data.issues);
 				issues.value = data.issues;
 				loaded.value = true;
+			});
+
+			const userList = httpsCallable(functions, "getUsersList");
+			userList().then((result) => {
+				const { data } = result as {
+					data: UserList[];
+				};
 			});
 		});
 

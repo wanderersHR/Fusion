@@ -446,6 +446,17 @@ export interface Issue {
 	fields: Fields;
 }
 
+export interface UserList {
+	self: string;
+	key: string;
+	accountId: string;
+	accountType: string;
+	name: string;
+	avatarUrls: AvatarUrls;
+	displayName: string;
+	active: boolean;
+}
+
 export interface JiraProjectDetails {
 	expand: string;
 	startAt: number;
