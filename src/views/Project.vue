@@ -2,17 +2,16 @@
 <template>
 	<Navigation />
 	<router-link to="/projects">
-		<h4><font-awesome-icon icon="house-chimney" size="lg" /> Return to projects</h4>
+		<h6><font-awesome-icon icon="house-chimney" size="lg" /> Return to projects</h6>
 	</router-link>
+	<h1 style="text-align: center">Tickets for Project {{ projectName }}</h1>
+	<h2 style="text-align: center">Select a month:</h2>
+	<Datepicker v-model="picked" style="width: 100%; padding-left: 40%; padding-right: 40%" monthPicker />
 
 	<button class="refreshBtn" v-on:click="refreshCache">
 		<font-awesome-icon icon="rotate" :class="refreshing ? `refreshing` : ``" />
 		{{ refreshing ? `Refreshing...` : `Refresh` }}
 	</button>
-
-	<h1 style="text-align: center">Tickets for Project {{ projectName }}</h1>
-	<h2 style="text-align: center">Select a month:</h2>
-	<Datepicker v-model="picked" style="width: 100%; padding-left: 40%; padding-right: 40%" monthPicker />
 	<div v-if="filteredIssues.length > 0 && loaded">
 		<div class="main-box">
 			<div class="ticket-columns">
