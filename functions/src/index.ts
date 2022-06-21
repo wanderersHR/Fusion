@@ -3,7 +3,7 @@
 import * as functions from "firebase-functions";
 import * as cors from "cors";
 import axios from "axios";
-import { Hour, HourResponse } from "./models";
+import { Hour, HourResponse, UserList } from "./models";
 const corsHandler = cors({ origin: true });
 
 const JiraDomain = "https://hr-blis.atlassian.net/rest/api/3";
@@ -75,6 +75,30 @@ export const getHoursByTicket = functions.https.onCall((request, response) => {
 			}
 
 			return { data: "Hours with that ticket not found" };
+		});
+});
+
+export const getUsersList = functions.https.onCall((request, response) => {
+	return axios
+		.get<UserList[]>(`${JiraDomain}/users/search`, {
+			headers: {
+				"Content-type": "application/json",
+				Authorization: JiraApiTokenHeader,
+				Accept: "application/json",
+			},
+		})
+		.then((res) => {
+			const users = res.data.filter((user) => user.accountType === "customer");
+			return users;
+		})
+		.catch((err) => {
+			console.log(err);
+
+			return {
+				error: "Something went wrong",
+				headers: err.headers,
+				status: err.status,
+			};
 		});
 });
 

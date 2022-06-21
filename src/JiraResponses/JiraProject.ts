@@ -6,6 +6,8 @@
  * @format
  */
 
+import { StringLike } from "@firebase/util";
+
 export interface AvatarUrls {
 	"48x48": string;
 	"24x24": string;
