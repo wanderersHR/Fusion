@@ -6,6 +6,14 @@
  * @format
  */
 
+export interface HoursObject {
+	totalPrice: number;
+	pricePerHour: number;
+	id: string;
+	note: string;
+	hours: number;
+}
+
 export interface Issuetype {
 	self: string;
 	id: string;
@@ -429,6 +437,8 @@ export interface Fields {
 }
 
 export interface Issue {
+	debug?: any;
+	hours: HoursObject[] | undefined;
 	expand: string;
 	id: string;
 	self: string;
