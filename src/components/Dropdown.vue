@@ -3,7 +3,7 @@
 <template>
 	<div v-if="usertype != 'customer'" class="dropdown">
 		<button @click="show = !show" class="dropbtn">
-			<font-awesome-icon icon="circle-user" size="xl" /> User List
+			<font-awesome-icon icon="chevron-circle-down" size="xl" /> User List
 		</button>
 		<div v-if="show && usertype != 'customer'">
 			<div class="dropdown-content">

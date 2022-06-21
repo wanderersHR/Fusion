@@ -3,7 +3,7 @@
 import * as functions from "firebase-functions";
 import * as cors from "cors";
 import axios from "axios";
-import { Hour, HourResponse, HoursObject, JiraProjectDetails } from "./models";
+import { Hour, HourResponse, HoursObject, JiraProjectDetails, UserList } from "./models";
 const corsHandler = cors({ origin: true });
 
 const JiraDomain = "https://hr-blis.atlassian.net/rest/api/3";

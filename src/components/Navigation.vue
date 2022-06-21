@@ -7,11 +7,13 @@
 				<img src="/logo.svg" alt="Fusion" class="main-nav__logo" />
 			</router-link>
 		</div>
-		<div>
+		<div class="dropdown-placing">
 			<Dropdown :userList="usersList" />
-
+		</div>
+		<div class="main-nav__logout">
 			<router-link to="/">
 				<font-awesome-icon icon="arrow-right-from-bracket" size="xl" />
+				Log out
 			</router-link>
 		</div>
 	</div>

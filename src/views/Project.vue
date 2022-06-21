@@ -1,6 +1,9 @@
 <!-- @format -->
 <template>
 	<Navigation />
+	<router-link to="/projects">
+		<h4><font-awesome-icon icon="house-chimney" size="lg" /> Return to projects</h4>
+	</router-link>
 	<h1 style="text-align: center">Tickets for Project {{ projectName }}</h1>
 	<h2 style="text-align: center">Select a month:</h2>
 	<Datepicker v-model="picked" style="width: 100%; padding-left: 40%; padding-right: 40%" monthPicker />
@@ -14,9 +17,9 @@
 			</div>
 		</div>
 	</div>
-
 	<div v-else-if="filteredIssues.length == 0 && loaded">
-		<h1 style="text-align: center; padding-top: 5%"><font-awesome-icon icon="face-sad-cry" />No tickets found</h1>
+		<h1 style="text-align: center; padding-top: 5%"><font-awesome-icon icon="circle-exclamation" size="2xl" /></h1>
+		<h1 style="text-align: center">No tickets found</h1>
 	</div>
 
 	<div v-if="!loaded" class="loader">
