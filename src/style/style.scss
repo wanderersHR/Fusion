@@ -137,8 +137,26 @@ body {
 				display: block;
 				padding-top: 0.5em;
 				color: $highlight;
-				text-align: right;
 				font-size: 0.8em;
+			}
+
+			.ticket-row {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				align-items: center;
+
+				.ticket-columns-info {
+					margin-right: 3ch;
+				}
+
+				.ticket-columns-hours {
+					display: flex;
+					flex-direction: column;
+
+					color: #006eff;
+					font-weight: bold;
+				}
 			}
 		}
 	}
