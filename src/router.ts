@@ -6,7 +6,7 @@ import guest from "./middleware/guest";
 
 const routes: RouteRecordRaw[] = [
 	{
-		path: "/home",
+		path: "/",
 		name: "home",
 		component: () => import("./views/Home.vue"),
 		beforeEnter: [auth],
