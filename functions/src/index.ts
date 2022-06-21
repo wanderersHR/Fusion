@@ -69,6 +69,14 @@ function simplicateGetHoursByTicket(ticketId: string) {
 	return hours;
 }
 
+export const clearCache = functions.https.onCall((request, response) => {
+	CachedHours = undefined;
+
+	simplicateGetAllHours().finally(() => {
+		return { data: true };
+	});
+});
+
 export const allHours = functions.https.onRequest((request, response) => {
 	corsHandler(request, response, () => {
 		simplicateGetAllHours().then((res) => {

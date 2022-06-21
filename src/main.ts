@@ -12,11 +12,20 @@ import {
 	faChevronCircleDown,
 	faCircleExclamation,
 	faHouseChimney,
+	faRotate,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 import "./style sass/style.scss";
 
-library.add(faJira, faArrowRightFromBracket, faCircleUser, faChevronCircleDown, faCircleExclamation, faHouseChimney);
+library.add(
+	faJira,
+	faArrowRightFromBracket,
+	faCircleUser,
+	faChevronCircleDown,
+	faCircleExclamation,
+	faHouseChimney,
+	faRotate
+);
 
 createApp(App).use(router).use(createPinia()).component("font-awesome-icon", FontAwesomeIcon).mount("#app");
