@@ -249,6 +249,38 @@ body {
 		background: darken($color: $accent, $amount: 10);
 	}
 }
+
+.refreshBtn {
+	background: transparent;
+	border: none;
+	padding: 1em;
+	cursor: pointer;
+	transition: all 0.2s ease-in-out;
+	color: $accent;
+	text-decoration: none;
+
+	width: fit-content;
+
+	margin-top: 1.8em;
+
+	&:hover {
+		background: darken($color: $background, $amount: 10);
+	}
+
+	.refreshing {
+		animation: spin 2s linear infinite;
+	}
+
+	@keyframes spin {
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+}
+
 .loader {
 	display: block;
 

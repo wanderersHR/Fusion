@@ -1,9 +1,17 @@
 <!-- @format -->
 <template>
 	<Navigation />
+
+	<button class="refreshBtn" v-on:click="refreshCache">
+		<font-awesome-icon icon="rotate" :class="refreshing ? `refreshing` : ``" />
+		{{ refreshing ? `Refreshing...` : `Refresh` }}
+	</button>
+
 	<h1 style="text-align: center">Tickets for Project {{ projectName }}</h1>
 	<h2 style="text-align: center">Select a month:</h2>
+
 	<Datepicker v-model="picked" style="width: 100%; padding-left: 30%; padding-right: 30%" monthPicker />
+
 	<div v-if="filteredIssues.length > 0 && loaded">
 		<div class="main-box">
 			<div class="ticket-columns">
@@ -40,6 +48,25 @@ import moment from "moment";
 import TicketOverview from "../components/TicketOverview.vue";
 
 export default defineComponent({
+	data() {
+		return {
+			refreshing: false,
+		};
+	},
+	methods: {
+		refreshCache() {
+			this.refreshing = true;
+
+			const firebaseStore = useFirebaseStore();
+			firebaseStore.loadFirebase();
+
+			const functions = firebaseStore.functions;
+
+			const clearCache = httpsCallable(functions, "clearCache");
+			clearCache().then(() => window.location.reload());
+		},
+	},
+
 	setup() {
 		const authStore = useAuthenticationStore();
 		const authorId = authStore.getUser?.account_id;
