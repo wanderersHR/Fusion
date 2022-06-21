@@ -65,7 +65,7 @@ setInterval(async () => {
 }, 1000 * 60 * 60);
 
 function simplicateGetHoursByTicket(ticketId: string) {
-	const hours = CachedHours?.hours.filter((hour) => hour.note.includes(ticketId));
+	const hours = CachedHours?.hours.filter((hour) => hour.note.toLowerCase().includes(ticketId.toLowerCase()));
 	return hours;
 }
 
