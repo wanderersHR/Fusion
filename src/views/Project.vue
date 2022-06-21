@@ -10,16 +10,7 @@
 				<IssueComponent v-for="issue in filteredIssues" v-bind:key="issue.id" v-bind:issue="issue" />
 			</div>
 			<div class="side-columns">
-				<div class="side-columns__box">
-					<h2>Tickets:</h2>
-					<h1>5</h1>
-					<br />
-					<h2>Uren:</h2>
-					<h1>76 uur</h1>
-					<br />
-					<h2>Kosten:</h2>
-					<h1>€7600</h1>
-				</div>
+				<TicketOverview :issues="filteredIssues" />
 			</div>
 		</div>
 	</div>
@@ -42,6 +33,7 @@ import { useAuthenticationStore } from "../stores/authentication";
 import Datepicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import moment from "moment";
+import TicketOverview from "../components/TicketOverview.vue";
 
 export default defineComponent({
 	setup() {
@@ -82,6 +74,6 @@ export default defineComponent({
 
 		return { projectName, filteredIssues, picked };
 	},
-	components: { Loader, IssueComponent, Navigation, Datepicker },
+	components: { Loader, IssueComponent, Navigation, Datepicker, TicketOverview },
 });
 </script>
