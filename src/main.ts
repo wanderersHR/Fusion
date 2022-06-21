@@ -9,7 +9,7 @@ import { faJira } from "@fortawesome/free-brands-svg-icons";
 import { faArrowRightFromBracket, faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-import "./style/style.scss";
+import "./style sass/style.scss";
 
 library.add(faJira, faArrowRightFromBracket, faCircleUser);
 
