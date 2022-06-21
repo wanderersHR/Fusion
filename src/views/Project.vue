@@ -1,17 +1,17 @@
 <!-- @format -->
 <template>
 	<Navigation />
+	<router-link to="/projects">
+		<h6><font-awesome-icon icon="house-chimney" size="lg" /> Return to projects</h6>
+	</router-link>
+	<h1 style="text-align: center">Tickets for Project {{ projectName }}</h1>
+	<h2 style="text-align: center">Select a month:</h2>
+	<Datepicker v-model="picked" style="width: 100%; padding-left: 40%; padding-right: 40%" monthPicker />
 
 	<button class="refreshBtn" v-on:click="refreshCache">
 		<font-awesome-icon icon="rotate" :class="refreshing ? `refreshing` : ``" />
 		{{ refreshing ? `Refreshing...` : `Refresh` }}
 	</button>
-
-	<h1 style="text-align: center">Tickets for Project {{ projectName }}</h1>
-	<h2 style="text-align: center">Select a month:</h2>
-
-	<Datepicker v-model="picked" style="width: 100%; padding-left: 30%; padding-right: 30%" monthPicker />
-
 	<div v-if="filteredIssues.length > 0 && loaded">
 		<div class="main-box">
 			<div class="ticket-columns">
@@ -22,9 +22,9 @@
 			</div>
 		</div>
 	</div>
-
 	<div v-else-if="filteredIssues.length == 0 && loaded">
-		<h1 style="text-align: center; padding-top: 5%">No tickets found</h1>
+		<h1 style="text-align: center; padding-top: 5%"><font-awesome-icon icon="circle-exclamation" size="2xl" /></h1>
+		<h1 style="text-align: center">No tickets found</h1>
 	</div>
 
 	<div v-if="!loaded" class="loader">
@@ -38,13 +38,14 @@ import { computed, defineComponent, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import Navigation from "../components/Navigation.vue";
 import { useFirebaseStore } from "../stores/firebase";
-import { Issue, JiraProjectDetails } from "../JiraResponses/JiraProjectDetail";
+import { Issue, UserList, JiraProjectDetails } from "../JiraResponses/JiraProjectDetail";
 import Loader from "../components/Loader.vue";
 import IssueComponent from "../components/Issue.vue";
 import { useAuthenticationStore } from "../stores/authentication";
 import Datepicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import moment from "moment";
+import { useSelectedUserStore } from "../stores/selecteduser";
 import TicketOverview from "../components/TicketOverview.vue";
 
 export default defineComponent({
@@ -69,7 +70,8 @@ export default defineComponent({
 
 	setup() {
 		const authStore = useAuthenticationStore();
-		const authorId = authStore.getUser?.account_id;
+		const selectedUser = useSelectedUserStore();
+		const authorId = selectedUser.getAccountId ? selectedUser.getAccountId : authStore.getUser?.account_id;
 		const route = useRoute();
 		const projectName = route.params.name;
 		const issues = ref<Issue[]>([]);
@@ -80,7 +82,7 @@ export default defineComponent({
 		const loaded = ref(false);
 
 		const filteredIssues = computed(() => {
-			let ownTickets = issues.value.filter((issue) => issue.fields.creator.accountId === authorId);
+			let ownTickets = issues.value.filter((issue) => issue.fields.reporter.accountId === authorId);
 			let monthTickets = ownTickets.filter(
 				(issue) =>
 					moment(issue.fields.created).month() === picked.value.month &&
@@ -94,14 +96,23 @@ export default defineComponent({
 			firebaseStore.loadFirebase();
 
 			const functions = firebaseStore.functions;
+			console.log(authorId);
 
 			const projectInfo = httpsCallable(functions, "getProject");
 			projectInfo({ name: projectName }).then((result: any) => {
 				const { data } = result as {
 					data: JiraProjectDetails;
 				};
+				console.log(data.issues);
 				issues.value = data.issues;
 				loaded.value = true;
+			});
+
+			const userList = httpsCallable(functions, "getUsersList");
+			userList().then((result) => {
+				const { data } = result as {
+					data: UserList[];
+				};
 			});
 		});
 

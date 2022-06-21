@@ -1,28 +1,52 @@
 <!-- @format -->
 
 <template>
-	<div class="dropdown">
+	<div v-if="usertype != 'customer'" class="dropdown">
 		<button @click="show = !show" class="dropbtn">
-			<font-awesome-icon icon="circle-user" size="xl" /> User List
+			<font-awesome-icon icon="chevron-circle-down" size="xl" /> User List
 		</button>
-		<div v-if="show">
+		<div v-if="show && usertype != 'customer'">
 			<div class="dropdown-content">
-				<router-link to="/projects">User 1</router-link>
-				<a href="#about">Een lange naam 3</a>
-				<a href="#contact">Patrick Sekimonyo</a>
+				<a href="#" @click="setUser(user.accountId)" v-for="user in userList" v-bind:key="user.accountId">{{
+					user.displayName
+				}}</a>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, toRefs } from "vue";
+import { UserList } from "../JiraResponses/JiraProjectDetail";
+import { useAuthenticationStore } from "../stores/authentication";
+import { useSelectedUserStore } from "../stores/selecteduser";
 
 export default defineComponent({
-	setup() {
+	props: {
+		userList: {
+			type: Object as () => UserList[],
+			required: true,
+		},
+	},
+	setup(props) {
+		const { userList } = toRefs(props);
+		const selectedUser = useSelectedUserStore();
+		const authstore = useAuthenticationStore();
+		const usertype = ref(authstore.getUser?.account_type);
 		const show = ref(false);
 
-		return { show };
+		function setUser(account_id: string) {
+			selectedUser.setAccountId(account_id);
+			console.log(account_id);
+			console.log(usertype);
+		}
+
+		return {
+			show,
+			userList,
+			setUser,
+			usertype,
+		};
 	},
 });
 </script>

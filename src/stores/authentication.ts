@@ -3,6 +3,7 @@
 import { defineStore } from "pinia";
 import loginData from "../data.json";
 import { JiraProfile } from "../JiraResponses/JiraProfile";
+import { useSelectedUserStore } from "../stores/selecteduser";
 
 interface AccessTokenResponse {
 	access_token: string;
@@ -65,6 +66,8 @@ export const useAuthenticationStore = defineStore("authentication", {
 			this.user = undefined;
 			localStorage.removeItem("accessToken");
 			localStorage.removeItem("user");
+			const selectedUser = useSelectedUserStore();
+			selectedUser.removeAccountId();
 		},
 		refresh() {
 			const refreshData = {
