@@ -3,7 +3,7 @@
 	<Navigation />
 	<h1 style="text-align: center">Tickets for Project {{ projectName }}</h1>
 	<h2 style="text-align: center">Select a month:</h2>
-	<Datepicker v-model="picked" style="width: 100%; padding-left: 30%; padding-right: 30%" monthPicker />
+	<Datepicker v-model="picked" style="width: 100%; padding-left: 40%; padding-right: 40%" monthPicker />
 	<div v-if="filteredIssues.length > 0 && loaded">
 		<div class="main-box">
 			<div class="ticket-columns">
@@ -16,7 +16,7 @@
 	</div>
 
 	<div v-else-if="filteredIssues.length == 0 && loaded">
-		<h1 style="text-align: center; padding-top: 5%">No tickets found</h1>
+		<h1 style="text-align: center; padding-top: 5%"><font-awesome-icon icon="face-sad-cry" />No tickets found</h1>
 	</div>
 
 	<div v-if="!loaded" class="loader">
