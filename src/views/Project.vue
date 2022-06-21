@@ -4,27 +4,22 @@
 	<h1 style="text-align: center">Tickets for Project {{ projectName }}</h1>
 	<h2 style="text-align: center">Select a month:</h2>
 	<Datepicker v-model="picked" style="width: 100%; padding-left: 30%; padding-right: 30%" monthPicker />
-	<div v-if="filteredIssues.length > 0">
+	<div v-if="filteredIssues.length > 0 && loaded">
 		<div class="main-box">
 			<div class="ticket-columns">
 				<IssueComponent v-for="issue in filteredIssues" v-bind:key="issue.id" v-bind:issue="issue" />
 			</div>
 			<div class="side-columns">
-				<div class="side-columns__box">
-					<h2>Tickets:</h2>
-					<h1>5</h1>
-					<br />
-					<h2>Uren:</h2>
-					<h1>76 uur</h1>
-					<br />
-					<h2>Kosten:</h2>
-					<h1>€7600</h1>
-				</div>
+				<TicketOverview :issues="filteredIssues" />
 			</div>
 		</div>
 	</div>
 
-	<div v-else class="loader">
+	<div v-else-if="filteredIssues.length == 0 && loaded">
+		<h1 style="text-align: center; padding-top: 5%">No tickets found</h1>
+	</div>
+
+	<div v-if="!loaded" class="loader">
 		<Loader />
 	</div>
 </template>
@@ -42,6 +37,7 @@ import { useAuthenticationStore } from "../stores/authentication";
 import Datepicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import moment from "moment";
+import TicketOverview from "../components/TicketOverview.vue";
 
 export default defineComponent({
 	setup() {
@@ -54,6 +50,7 @@ export default defineComponent({
 			month: new Date().getMonth(),
 			year: new Date().getFullYear(),
 		});
+		const loaded = ref(false);
 
 		const filteredIssues = computed(() => {
 			let ownTickets = issues.value.filter((issue) => issue.fields.creator.accountId === authorId);
@@ -77,11 +74,12 @@ export default defineComponent({
 					data: JiraProjectDetails;
 				};
 				issues.value = data.issues;
+				loaded.value = true;
 			});
 		});
 
-		return { projectName, filteredIssues, picked };
+		return { projectName, filteredIssues, picked, loaded };
 	},
-	components: { Loader, IssueComponent, Navigation, Datepicker },
+	components: { Loader, IssueComponent, Navigation, Datepicker, TicketOverview },
 });
 </script>
