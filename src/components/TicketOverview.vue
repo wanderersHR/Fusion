@@ -13,7 +13,7 @@
 	</div>
 </template>
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, toRefs } from "vue";
 import { Issue } from "../JiraResponses/JiraProjectDetail";
 
 export default defineComponent({
@@ -24,15 +24,15 @@ export default defineComponent({
 		},
 	},
 	setup(props) {
-		const issues = props.issues;
+		const { issues } = toRefs(props);
 
 		const countIssues = computed(() => {
-			return issues.length;
+			return issues.value.length;
 		});
 
 		const countHours = computed(() => {
 			let hours = 0;
-			issues.forEach((issue) => {
+			issues.value.forEach((issue) => {
 				issue.hours?.forEach((hour) => {
 					hours += hour.hours;
 				});
@@ -42,7 +42,7 @@ export default defineComponent({
 
 		const countPrice = computed(() => {
 			let price = 0;
-			issues.forEach((issue) => {
+			issues.value.forEach((issue) => {
 				issue.hours?.forEach((hour) => {
 					price += hour.totalPrice;
 				});
