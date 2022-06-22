@@ -96,14 +96,12 @@ export default defineComponent({
 			firebaseStore.loadFirebase();
 
 			const functions = firebaseStore.functions;
-			console.log(authorId);
 
 			const projectInfo = httpsCallable(functions, "getProject");
 			projectInfo({ name: projectName }).then((result: any) => {
 				const { data } = result as {
 					data: JiraProjectDetails;
 				};
-				console.log(data.issues);
 				issues.value = data.issues;
 				loaded.value = true;
 			});

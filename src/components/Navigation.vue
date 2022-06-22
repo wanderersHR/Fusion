@@ -43,6 +43,7 @@ export default defineComponent({
 
 		const functions = firebaseStore.functions;
 
+		// Get all the customers from atlassian
 		const userList = httpsCallable(functions, "getUsersList");
 		userList().then((result) => {
 			const { data } = result as {
@@ -51,6 +52,7 @@ export default defineComponent({
 			usersList.value = data;
 		});
 
+		// Log the user out and redirect the user to the login page
 		function logout() {
 			authenticationStore.logout();
 			router.push({ name: "login" });

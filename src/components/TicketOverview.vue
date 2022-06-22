@@ -26,10 +26,12 @@ export default defineComponent({
 	setup(props) {
 		const { issues } = toRefs(props);
 
+		// Count all the issues of this month
 		const countIssues = computed(() => {
 			return issues.value.length;
 		});
 
+		// Count all the hours of the issues of this month
 		const countHours = computed(() => {
 			let hours = 0;
 			issues.value.forEach((issue) => {
@@ -40,6 +42,7 @@ export default defineComponent({
 			return hours;
 		});
 
+		// Count the price of the issues of this month
 		const countPrice = computed(() => {
 			let price = 0;
 			issues.value.forEach((issue) => {

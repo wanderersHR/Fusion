@@ -35,10 +35,9 @@ export default defineComponent({
 		const usertype = ref(authstore.getUser?.account_type);
 		const show = ref(false);
 
+		// Set the selected user account id in the stores
 		function setUser(account_id: string) {
 			selectedUser.setAccountId(account_id);
-			console.log(account_id);
-			console.log(usertype);
 		}
 
 		return {

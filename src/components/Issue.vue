@@ -41,10 +41,12 @@ export default defineComponent({
 	setup(props) {
 		const issue = props.issue;
 
+		// Get the issue name
 		const issueName = computed(() => {
 			return props.issue.fields.description?.content[0].content[0].text;
 		});
 
+		// Get the total hours of all the issues
 		const totalHours = computed(() => {
 			let hours = 0;
 			if (props.issue.hours) {
@@ -55,6 +57,7 @@ export default defineComponent({
 			return hours;
 		});
 
+		// Get the total price of all the tickets
 		const totalPrice = computed(() => {
 			let price = 0;
 			if (issue.hours) {
@@ -65,10 +68,12 @@ export default defineComponent({
 			return price;
 		});
 
+		// Format the creation date of the ticket
 		const creationDate = computed(() => {
 			return moment(issue.fields.created).format("LLL");
 		});
 
+		// Get the updated date in human times
 		const dateFromNow = computed(() => {
 			return moment(issue.fields.updated).fromNow();
 		});

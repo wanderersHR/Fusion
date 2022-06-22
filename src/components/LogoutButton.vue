@@ -17,6 +17,7 @@ export default defineComponent({
 		const authenticationStore = useAuthenticationStore();
 		const router = useRouter();
 
+		// Log the user out and redirect the user to the login page
 		function logout() {
 			authenticationStore.logout();
 			router.push({ name: "login" });

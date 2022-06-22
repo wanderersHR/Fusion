@@ -31,7 +31,6 @@ export default defineComponent({
 		const hoursOfSingleTicket = httpsCallable(functions, "getHoursByTicket");
 		hoursOfSingleTicket({ ticket: "bs-2" }).then((result) => {
 			const { data } = result;
-			console.log(data);
 		});
 	},
 });
